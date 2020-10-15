@@ -59,7 +59,7 @@ public class GUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					test frame = new test();
+					GUI frame = new GUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -84,7 +84,7 @@ public class GUI extends JFrame {
 		panel.setBackground(Color.GRAY);
 		panel.setBounds(10, 59, 386, 411);
 		contentPane.add(panel);
-		
+
 		Button button = new Button("Play Selected Game");
 		button.setActionCommand("Play ");
 		button.addActionListener(new ActionListener() {
@@ -96,33 +96,31 @@ public class GUI extends JFrame {
 		button.setBackground(new Color(241, 57, 83));
 		button.setBounds(429, 30, 316, 51);
 		contentPane.add(button);
-		
+
 		JTree tree = new JTree();
-		tree.setModel(new DefaultTreeModel(
-			new DefaultMutableTreeNode("Applications") {
-				{
-					DefaultMutableTreeNode node_1;
-					node_1 = new DefaultMutableTreeNode("Games");
-						node_1.add(new DefaultMutableTreeNode("Tic Tac Toe"));
-						node_1.add(new DefaultMutableTreeNode("BlackJack"));
-						node_1.add(new DefaultMutableTreeNode("Connect4"));
-						node_1.add(new DefaultMutableTreeNode("Sudoku"));
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("Utilities");
-						node_1.add(new DefaultMutableTreeNode("Calculator"));
-						node_1.add(new DefaultMutableTreeNode("Stopwatch"));
-					add(node_1);
-				}
+		tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Applications") {
+			{
+				DefaultMutableTreeNode node_1;
+				node_1 = new DefaultMutableTreeNode("Games");
+				node_1.add(new DefaultMutableTreeNode("Tic Tac Toe"));
+				node_1.add(new DefaultMutableTreeNode("BlackJack"));
+				node_1.add(new DefaultMutableTreeNode("Connect4"));
+				node_1.add(new DefaultMutableTreeNode("Sudoku"));
+				add(node_1);
+				node_1 = new DefaultMutableTreeNode("Utilities");
+				node_1.add(new DefaultMutableTreeNode("Calculator"));
+				node_1.add(new DefaultMutableTreeNode("Stopwatch"));
+				add(node_1);
 			}
-		));
+		}));
 		tree.setForeground(Color.GRAY);
 		tree.setFont(new Font("Bahnschrift", Font.BOLD, 11));
 		tree.setBorder(new LineBorder(Color.GRAY, 2));
 		tree.setBackground(Color.GRAY);
 		tree.setBounds(429, 135, 316, 335);
-		
+
 		contentPane.add(tree);
-		
+
 		txtWords = new JTextField();
 		txtWords.setEditable(false);
 		txtWords.setBackground(Color.GRAY);
@@ -133,7 +131,7 @@ public class GUI extends JFrame {
 		txtWords.setBounds(429, 100, 316, 36);
 		contentPane.add(txtWords);
 		txtWords.setColumns(10);
-		
+
 		JButton btnNewButton = new JButton("Toggle Dark Mode");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -143,7 +141,7 @@ public class GUI extends JFrame {
 		btnNewButton.setFont(new Font("Bahnschrift", Font.BOLD, 12));
 		btnNewButton.setBounds(10, 25, 161, 23);
 		contentPane.add(btnNewButton);
-		
+
 		JButton btnToggleLightMode = new JButton("Toggle Light Mode");
 		btnToggleLightMode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -153,26 +151,21 @@ public class GUI extends JFrame {
 		btnToggleLightMode.setFont(new Font("Bahnschrift", Font.BOLD, 12));
 		btnToggleLightMode.setBounds(235, 25, 161, 23);
 		contentPane.add(btnToggleLightMode);
-		
+
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(429, 134, 316, 335);
-		
 
-		
 		for (int i = 0; i < 5; i++) {
-			JRadioButton button2 = new JRadioButton(""+(i+1));
-		    GridBagConstraints gbc = new GridBagConstraints(
-		            0, i,                           //cell for top left corner
-		            1, 1,                           //cells to span
-		            1, i==4?1:0 ,                   //spacing wieght
-		            GridBagConstraints.PAGE_START,  //where to anchor the component in the cell
-		            GridBagConstraints.HORIZONTAL,  //how to fill extra space
-		            new Insets(0, 0, 0, 0),         //insets for the cell
-		            0, 0);                          //additional padding
-		   scrollPane.add(button2, gbc);
+			JRadioButton button2 = new JRadioButton("" + (i + 1));
+			GridBagConstraints gbc = new GridBagConstraints(0, i, // cell for top left corner
+					1, 1, // cells to span
+					1, i == 4 ? 1 : 0, // spacing wieght
+					GridBagConstraints.PAGE_START, // where to anchor the component in the cell
+					GridBagConstraints.HORIZONTAL, // how to fill extra space
+					new Insets(0, 0, 0, 0), // insets for the cell
+					0, 0); // additional padding
+			scrollPane.add(button2, gbc);
 		}
-		
-		
-	
+
 	}
 }
