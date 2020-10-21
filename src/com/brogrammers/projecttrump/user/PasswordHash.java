@@ -2,7 +2,6 @@ package com.brogrammers.projecttrump.user;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 
 /**
