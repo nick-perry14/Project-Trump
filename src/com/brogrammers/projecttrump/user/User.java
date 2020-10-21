@@ -35,9 +35,7 @@ public class User {
 	 * @return Whether or not the user is a moderator
 	 */
 	public static boolean isModerator(User user) {
-		if (user.rank == Ranks.Moderator || user.rank == Ranks.Admin)
-			return true;
-		return false;
+		return user.rank == Ranks.Moderator || user.rank == Ranks.Admin;
 	}
 	
 	/**
@@ -47,9 +45,7 @@ public class User {
 	 * @return Whether or not the user is an admin
 	 */
 	public static boolean isAdmin(User user) {
-		if (user.rank == Ranks.Admin)
-			return true;
-		return false;
+		return user.rank == Ranks.Admin;
 	}
 
 	/**
