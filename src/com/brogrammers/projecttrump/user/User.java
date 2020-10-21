@@ -1,3 +1,4 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.user;
 
 import com.brogrammers.projecttrump.gui.Entry;
@@ -6,9 +7,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User {
-	private static HashMap<String, User> users = new HashMap<>();
+	/**
+	 * Static Hashmap that contains all the users that are registered.
+	 */
+	private static HashMap<String, User> users = loadUsersInit();
+	/**
+	 * The password hash of the user
+	 */
 	private String passwordHash;
+	/**
+	 * The salt of the user
+	 */
 	private byte[] salt;
+	/**
+	 * 
+	 */
 	private String username;
 	private Ranks rank;
 	public ArrayList<Entry> favorites = new ArrayList<>();
@@ -29,6 +42,16 @@ public class User {
 	}
 
 	/**
+	 * The initial Loading method that gets the users on program start.
+	 * 
+	 * @return HashMap of loaded users
+	 */
+	private static HashMap<String, User> loadUsersInit() {
+		HashMap<String, User> users = new HashMap<>();
+		return users;
+	}
+
+	/**
 	 * Checks if the user has moderator privileges
 	 * 
 	 * @param user User object to check rank
@@ -37,7 +60,7 @@ public class User {
 	public static boolean isModerator(User user) {
 		return user.rank == Ranks.Moderator || user.rank == Ranks.Admin;
 	}
-	
+
 	/**
 	 * Checks if the user has admin privileges
 	 * 
