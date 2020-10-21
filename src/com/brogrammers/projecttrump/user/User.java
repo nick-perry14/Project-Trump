@@ -29,6 +29,30 @@ public class User {
 	}
 
 	/**
+	 * Checks if the user has moderator privileges
+	 * 
+	 * @param user User object to check rank
+	 * @return Whether or not the user is a moderator
+	 */
+	public static boolean isModerator(User user) {
+		if (user.rank == Ranks.Moderator || user.rank == Ranks.Admin)
+			return true;
+		return false;
+	}
+	
+	/**
+	 * Checks if the user has admin privileges
+	 * 
+	 * @param user User object to check rank
+	 * @return Whether or not the user is an admin
+	 */
+	public static boolean isAdmin(User user) {
+		if (user.rank == Ranks.Admin)
+			return true;
+		return false;
+	}
+
+	/**
 	 * Login Method
 	 * 
 	 * @param username Username Given
