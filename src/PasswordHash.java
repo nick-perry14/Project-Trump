@@ -32,10 +32,16 @@ public final class PasswordHash {
 	}
 	
     //Add salt
-    static byte[] getSalt() throws NoSuchAlgorithmException, NoSuchProviderException
+    static byte[] getSalt()
     {
         //Uses a secure random generator, using the SHA1PRNG algorithm, as this is a common one.
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+    	SecureRandom sr;
+        try {
+    	sr = SecureRandom.getInstance("SHA1PRNG");
+        }
+        catch(NoSuchAlgorithmException e) {
+        	return null;
+        }
         //Create array for salt
         byte[] salt = new byte[16];
         //Get a random salt
