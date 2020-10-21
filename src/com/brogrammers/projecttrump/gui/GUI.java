@@ -1,49 +1,29 @@
 package com.brogrammers.projecttrump.gui;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.FlowLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Button;
-import java.awt.SystemColor;
+import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Insets;
-
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.List;
-import javax.swing.JToggleButton;
-import java.awt.Scrollbar;
-import javax.swing.JScrollBar;
-import javax.swing.JFormattedTextField;
-import javax.swing.JRadioButton;
-import javax.swing.JEditorPane;
-import javax.swing.JRadioButtonMenuItem;
-import java.awt.Choice;
-import java.awt.ScrollPane;
+import java.awt.event.ActionListener;
+
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.border.TitledBorder;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import java.awt.Dimension;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.JMenu;
+import javax.swing.JTextField;
 import javax.swing.JTree;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 public class GUI extends JFrame {
 
@@ -83,7 +63,7 @@ public class GUI extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.GRAY);
-		panel.setBounds(10, 59, 386, 411);
+		panel.setBounds(10, 98, 386, 372);
 		contentPane.add(panel);
 
 		Button button = new Button("Play Selected Game");
@@ -93,9 +73,9 @@ public class GUI extends JFrame {
 			}
 		});
 		button.setFont(new Font("Bahnschrift", Font.BOLD, 22));
-		button.setForeground(new Color(255, 255, 255));
-		button.setBackground(new Color(241, 57, 83));
-		button.setBounds(429, 30, 316, 51);
+		button.setForeground(Color.WHITE);
+		button.setBackground(new Color(220, 20, 60));
+		button.setBounds(429, 10, 316, 71);
 		contentPane.add(button);
 
 		JTree tree = new JTree();
@@ -114,6 +94,7 @@ public class GUI extends JFrame {
 				add(node_1);
 			}
 		}));
+
 		tree.setForeground(Color.GRAY);
 		tree.setFont(new Font("Bahnschrift", Font.BOLD, 11));
 		tree.setBorder(new LineBorder(Color.GRAY, 2));
@@ -133,25 +114,33 @@ public class GUI extends JFrame {
 		contentPane.add(txtWords);
 		txtWords.setColumns(10);
 
-		JButton btnNewButton = new JButton("Toggle Dark Mode");
+		JButton btnNewButton = new JButton("Dark Mode");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contentPane.setBackground(Color.black);
+				if (contentPane.getBackground() == Color.black) {
+					contentPane.setBackground(Color.white);
+					btnNewButton.setLabel("Dark Mode");
+				} else if (contentPane.getBackground() == Color.white) {
+					contentPane.setBackground(Color.black);
+					btnNewButton.setLabel("Light Mode");
+				}
 			}
 		});
 		btnNewButton.setFont(new Font("Bahnschrift", Font.BOLD, 12));
-		btnNewButton.setBounds(10, 25, 161, 23);
+		btnNewButton.setBounds(10, 64, 161, 23);
 		contentPane.add(btnNewButton);
 
-		JButton btnToggleLightMode = new JButton("Toggle Light Mode");
-		btnToggleLightMode.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				contentPane.setBackground(Color.white);
-			}
-		});
-		btnToggleLightMode.setFont(new Font("Bahnschrift", Font.BOLD, 12));
-		btnToggleLightMode.setBounds(235, 25, 161, 23);
-		contentPane.add(btnToggleLightMode);
+		JButton btnNewButton_1 = new JButton("Logout");
+		btnNewButton_1.setFont(new Font("Bahnschrift", Font.BOLD, 13));
+		btnNewButton_1.setBounds(235, 64, 161, 23);
+		contentPane.add(btnNewButton_1);
+
+		JLabel lblNewLabel = new JLabel("Welcome, Guest!");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setForeground(new Color(220, 20, 60));
+		lblNewLabel.setFont(new Font("Bahnschrift", Font.BOLD, 30));
+		lblNewLabel.setBounds(10, 10, 386, 43);
+		contentPane.add(lblNewLabel);
 
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(429, 134, 316, 335);
@@ -167,6 +156,5 @@ public class GUI extends JFrame {
 					0, 0); // additional padding
 			scrollPane.add(button2, gbc);
 		}
-
 	}
 }
