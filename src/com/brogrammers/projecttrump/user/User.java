@@ -64,4 +64,21 @@ public class User {
 		return salt;
 	}
 
+	/**
+	 * Adds a favorite game or app
+	 * 
+	 * @param entry Entry object of game / app to add
+	 */
+	public void addFavorite(Entry entry) {
+		favorites.add(entry);
+	}
+
+	/**
+	 * Removes a favorite game or app
+	 * 
+	 * @param entry Entry object of game / app to remove
+	 */
+	public void remvoeFavorite(Entry entry) {
+		favorites.remove(entry);
+	}
 }
