@@ -55,7 +55,9 @@ public class User implements Serializable {
 	 * @param username Username of the new user
 	 * @param password Password of the new user
 	 */
-	public User(String username, String password) {
+	public User(String username, String password) throws UserAlreadyExistsException {
+		if(users.containsKey(username))
+			throw new UserAlreadyExistsException(username);
 		this.username = username;
 		this.salt = PasswordHash.getSalt();
 		this.passwordHash = PasswordHash.hashPassword(password, this.salt);
