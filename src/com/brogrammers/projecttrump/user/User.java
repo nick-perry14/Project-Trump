@@ -6,6 +6,11 @@ import com.brogrammers.projecttrump.gui.Entry;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Class designed to hold user login and favorite information
+ * @author Nick Perry
+ *
+ */
 public class User {
 	/**
 	 * Static Hashmap that contains all the users that are registered.
@@ -20,12 +25,24 @@ public class User {
 	 */
 	private byte[] salt;
 	/**
-	 * 
+	 * Username of the user
 	 */
 	private String username;
+	/**
+	 * Rank of the user
+	 */
 	private Ranks rank;
+	/**
+	 * Favorite apps of the user
+	 */
 	public ArrayList<Entry> favorites = new ArrayList<>();
 
+	/**
+	 * User Creation Constructor
+	 * 
+	 * @param username Username of the new user
+	 * @param password Password of the new user
+	 */
 	public User(String username, String password) {
 		this.username = username;
 		this.salt = PasswordHash.getSalt();
