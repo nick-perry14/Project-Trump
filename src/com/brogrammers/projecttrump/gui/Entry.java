@@ -1,6 +1,9 @@
 package com.brogrammers.projecttrump.gui;
 
-public class Entry {
+import java.io.Serializable;
+
+public class Entry implements Serializable{
+private static final long serialVersionUID = 1L;
 private String name;
 private String developer;
 private byte rating;
