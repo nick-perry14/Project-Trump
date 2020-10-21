@@ -1,13 +1,20 @@
 // Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.user;
 
-import com.brogrammers.projecttrump.gui.Entry;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.brogrammers.projecttrump.gui.Entry;
+
 /**
  * Class designed to hold user login and favorite information
+ * 
  * @author Nick Perry
  *
  */
@@ -52,20 +59,33 @@ public class User {
 	}
 
 	/**
-	 * This will refresh the user HashMap from the file.
-	 */
-	public void loadUsers() {
-
-	}
-
-	/**
-	 * The initial Loading method that gets the users on program start.
+	 * The initial Loading method that gets the users on program start.  Uses Deserialization
 	 * 
 	 * @return HashMap of loaded users
 	 */
+	@SuppressWarnings("unchecked") // Compiler warning ignored, because if not cast correctly, CastClastException
+									// thrown
 	private static HashMap<String, User> loadUsersInit() {
-		HashMap<String, User> users = new HashMap<>();
-		return users;
+		try {
+			File file = new File("users.txt");
+			if (!file.exists())
+				return new HashMap<>();
+			HashMap<String, User> users;
+			FileInputStream fis = new FileInputStream(file);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			users = (HashMap<String, User>) ois.readObject();
+			ois.close();
+			fis.close();
+			return users;
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			return new HashMap<>();
+		} catch (ClassNotFoundException c) {
+			c.printStackTrace();
+			return new HashMap<>();
+		} catch (ClassCastException e) {
+			return new HashMap<>();
+		}
 	}
 
 	/**
@@ -140,5 +160,20 @@ public class User {
 	 */
 	public void remvoeFavorite(Entry entry) {
 		favorites.remove(entry);
+	}
+
+	/**
+	 * Serializes and stores the user map into a file.
+	 */
+	public static void storeToFile() {
+		try {
+			FileOutputStream fos = new FileOutputStream("users.txt");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(users);
+			oos.close();
+			fos.close();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 }
