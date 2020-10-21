@@ -1,3 +1,4 @@
+package com.brogrammers.projecttrump.gui;
 
 public class Entry {
 private String name;
