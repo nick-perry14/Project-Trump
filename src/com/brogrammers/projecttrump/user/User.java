@@ -86,13 +86,32 @@ public class User implements Serializable {
 			fis.close();
 			return users;
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			return new HashMap<>();
+			HashMap<String, User> users = new HashMap<>();
+			try {
+				User admin = new User("Admin", "Password");
+				admin.rank = Ranks.ADMIN;
+				users.put("Admin", admin);
+			} catch (UserAlreadyExistsException e) {
+			}
+			return users;
 		} catch (ClassNotFoundException c) {
-			c.printStackTrace();
-			return new HashMap<>();
+			HashMap<String, User> users = new HashMap<>();
+			try {
+				User admin = new User("Admin", "Password");
+				admin.rank = Ranks.ADMIN;
+				users.put("Admin", admin);
+			} catch (UserAlreadyExistsException e) {
+			}
+			return users;
 		} catch (ClassCastException e) {
-			return new HashMap<>();
+			HashMap<String, User> users = new HashMap<>();
+			try {
+				User admin = new User("Admin", "Password");
+				admin.rank = Ranks.ADMIN;
+				users.put("Admin", admin);
+			} catch (UserAlreadyExistsException evt) {
+			}
+			return users;
 		}
 	}
 
@@ -171,11 +190,22 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * Public getter for username
+	 * 
+	 * @return Username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
 	 * Changes the user's password
-	 * @param username Username of user to change password
+	 * 
+	 * @param username    Username of user to change password
 	 * @param oldpassword Current password of user
 	 * @param newpassword New Password of user
-	 * @return If the password change was successful (a false will indicate invalid login)
+	 * @return If the password change was successful (a false will indicate invalid
+	 *         login)
 	 */
 	public static boolean changePassword(String username, String oldpassword, String newpassword) {
 		User user = login(username, oldpassword);
@@ -185,6 +215,28 @@ public class User implements Serializable {
 		user.salt = PasswordHash.getSalt();
 		user.passwordHash = PasswordHash.hashPassword(newpassword, user.salt);
 		return true;
+	}
+
+	/**
+	 * Gives the ability to change the rank of a user.
+	 * 
+	 * @param adminUser
+	 * @param adminPass
+	 * @param promotedUsername
+	 * @return Status code. -1: failed login 0: success 1: no permission (not an
+	 *         admin user) 2: Promoted user does not exist
+	 */
+	public static int changeRank(String adminUser, String adminPass, String promotedUsername, Ranks rank) {
+		User admin = login(adminUser, adminPass);
+		if (admin == null)
+			return -1;
+		if (!isAdmin(admin))
+			return 1;
+		User target = users.get(promotedUsername);
+		if (target == null)
+			return 2;
+		target.rank = rank;
+		return 0;
 	}
 
 	/**
