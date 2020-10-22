@@ -113,7 +113,7 @@ public class GUI extends JFrame {
 		txtWords.setBounds(429, 100, 316, 36);
 		contentPane.add(txtWords);
 		txtWords.setColumns(10);
-
+		// dark mode/light mode button has been turned into a single button
 		JButton btnNewButton = new JButton("Dark Mode");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
