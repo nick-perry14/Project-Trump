@@ -2,6 +2,7 @@ package com.brogrammers.projecttrump.user;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 
 /**
@@ -56,8 +57,8 @@ final class PasswordHash {
 		// common one.
 		SecureRandom sr;
 		try {
-			sr = SecureRandom.getInstance("SHA1PRNG");
-		} catch (NoSuchAlgorithmException e) {
+			sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
+		} catch (NoSuchAlgorithmException | NoSuchProviderException e) {
 			return null;
 		}
 		// Create array for salt
