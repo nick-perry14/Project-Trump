@@ -59,7 +59,7 @@ public class Entry implements Serializable {
 	/**
 	 * Deserializes array list of current entries.
 	 * 
-	 * @return
+	 * @return Array List Containing all entries
 	 */
 	@SuppressWarnings("unchecked")
 	private static ArrayList<Entry> readFromFile() {
