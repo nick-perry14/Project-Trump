@@ -88,7 +88,7 @@ public class User implements Serializable {
 			ois.close();
 			fis.close();
 			return users;
-		} catch (IOException | ClassNotFoundException e) {
+		} catch (IOException | ClassNotFoundException | ClassCastException e) {
 			return new HashMap<>();
 		}
 
