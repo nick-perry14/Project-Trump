@@ -8,5 +8,5 @@ import java.io.Serializable;
  *
  */
 enum Ranks implements Serializable {
-User, Moderator, Admin
+USER, MODERATOR, ADMIN
 }
