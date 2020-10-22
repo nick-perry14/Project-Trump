@@ -177,7 +177,7 @@ public class User implements Serializable {
 	 * @param newpassword New Password of user
 	 * @return If the password change was successful (a false will indicate invalid login)
 	 */
-	public boolean changePassword(String username, String oldpassword, String newpassword) {
+	public static boolean changePassword(String username, String oldpassword, String newpassword) {
 		User user = login(username, oldpassword);
 		if (user == null)
 			return false;
