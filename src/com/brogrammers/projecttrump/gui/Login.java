@@ -58,6 +58,7 @@ public class Login extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
+		// Displays "Username" in the panel
 		lblUsername = new JLabel("Username");
 		lblUsername.setBounds(25, 11, 253, 35);
 		panel.add(lblUsername);
@@ -68,6 +69,7 @@ public class Login extends JFrame {
 		panel.add(textField);
 		textField.setColumns(10);
 		
+		// Displays "Password" in the panel
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setBounds(25, 103, 253, 37);
 		panel.add(lblPassword);
@@ -77,16 +79,19 @@ public class Login extends JFrame {
 		passwordField.setBounds(25, 151, 253, 35);
 		panel.add(passwordField);
 		
+		// Displays a "Login" button
 		JButton btnNewButton = new JButton("Login");
 		btnNewButton.setBounds(25, 197, 122, 35);
 		panel.add(btnNewButton);
 		btnNewButton.setFont(new Font("Bahnschrift", Font.BOLD, 13));
 		
+		// Displays a "Guest Mode" button
 		JButton btnNewButton_1 = new JButton("Guest Mode\r\n");
 		btnNewButton_1.setBounds(157, 197, 121, 35);
 		panel.add(btnNewButton_1);
 		btnNewButton_1.setFont(new Font("Bahnschrift", Font.BOLD, 13));
 		
+		// Displays a "Create Account" button
 		JButton btnNewButton_2 = new JButton("Create Account");
 		btnNewButton_2.setBounds(25, 243, 253, 35);
 		panel.add(btnNewButton_2);
@@ -98,6 +103,7 @@ public class Login extends JFrame {
 		panel_1.setBounds(44, 30, 678, 54);
 		contentPane.add(panel_1);
 		
+		// Displays "Project Trump V1.1" on the login page
 		lblProjectTrumpV = new JLabel("PROJECT TRUMP V1.1");
 		lblProjectTrumpV.setForeground(new Color(220, 20, 60));
 		panel_1.add(lblProjectTrumpV);
@@ -110,6 +116,7 @@ public class Login extends JFrame {
 		panel_2.setBounds(44, 130, 303, 304);
 		contentPane.add(panel_2);
 		
+		// Displays our logo
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon("C:\\Users\\Luket\\Desktop\\blue-and-white-website-icon.png"));
 		label.setBounds(10, 11, 283, 282);
