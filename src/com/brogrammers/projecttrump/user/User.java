@@ -61,7 +61,10 @@ public class User implements Serializable {
 		this.username = username;
 		this.salt = PasswordHash.getSalt();
 		this.passwordHash = PasswordHash.hashPassword(password, this.salt);
-		this.rank = Ranks.USER;
+		if (users.isEmpty())
+			this.rank = Ranks.ADMIN;
+		else
+			this.rank = Ranks.USER;
 		users.put(this.username, this);
 	}
 
@@ -85,34 +88,10 @@ public class User implements Serializable {
 			ois.close();
 			fis.close();
 			return users;
-		} catch (IOException ioe) {
-			HashMap<String, User> users = new HashMap<>();
-			try {
-				User admin = new User("Admin", "Password");
-				admin.rank = Ranks.ADMIN;
-				users.put("Admin", admin);
-			} catch (UserAlreadyExistsException e) {
-			}
-			return users;
-		} catch (ClassNotFoundException c) {
-			HashMap<String, User> users = new HashMap<>();
-			try {
-				User admin = new User("Admin", "Password");
-				admin.rank = Ranks.ADMIN;
-				users.put("Admin", admin);
-			} catch (UserAlreadyExistsException e) {
-			}
-			return users;
-		} catch (ClassCastException e) {
-			HashMap<String, User> users = new HashMap<>();
-			try {
-				User admin = new User("Admin", "Password");
-				admin.rank = Ranks.ADMIN;
-				users.put("Admin", admin);
-			} catch (UserAlreadyExistsException evt) {
-			}
-			return users;
+		} catch (IOException | ClassNotFoundException e) {
+			return new HashMap<>();
 		}
+
 	}
 
 	/**
