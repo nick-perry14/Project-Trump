@@ -166,7 +166,7 @@ public class User implements Serializable {
 	 * 
 	 * @param entry Entry object of game / app to remove
 	 */
-	public void remvoeFavorite(Entry entry) {
+	public void removeFavorite(Entry entry) {
 		favorites.remove(entry);
 	}
 
