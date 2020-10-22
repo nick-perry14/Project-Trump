@@ -171,6 +171,23 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * Changes the user's password
+	 * @param username Username of user to change password
+	 * @param oldpassword Current password of user
+	 * @param newpassword New Password of user
+	 * @return If the password change was successful (a false will indicate invalid login)
+	 */
+	public boolean changePassword(String username, String oldpassword, String newpassword) {
+		User user = login(username, oldpassword);
+		if (user == null)
+			return false;
+		// Generate New Salt, Helps with security.
+		user.salt = PasswordHash.getSalt();
+		user.passwordHash = PasswordHash.hashPassword(newpassword, user.salt);
+		return true;
+	}
+
+	/**
 	 * Serializes and stores the user map into a file.
 	 */
 	public static void storeToFile() {
