@@ -2,7 +2,6 @@ package com.brogrammers.projecttrump.user;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 
 /**
@@ -34,7 +33,7 @@ final class PasswordHash {
 			// Appends the password to the MD then Hashes the passwords bytes into DECIMAL
 			// BYTES (to be converted)
 			byte[] bytes = md5.digest(password.getBytes());
-			StringBuilder sb = new StringBuilder();
+			StringBuffer sb = new StringBuffer();
 			// Convert into hex for standard formats
 			for (int i = 0; i < bytes.length; i++) {
 				sb.append(Integer.toHexString(bytes[i]).substring(1));

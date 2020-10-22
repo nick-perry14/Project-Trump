@@ -1,9 +1,12 @@
 package com.brogrammers.projecttrump.user;
+
+import java.io.Serializable;
+
 /**
  * Enum Of the various ranks.
  * @author Nick Perry
  *
  */
-enum Ranks {
-User, Moderator, Admin
+enum Ranks implements Serializable {
+USER, MODERATOR, ADMIN
 }

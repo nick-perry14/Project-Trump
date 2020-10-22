@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,7 +19,11 @@ import com.brogrammers.projecttrump.gui.Entry;
  * @author Nick Perry
  *
  */
-public class User {
+public class User implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Static Hashmap that contains all the users that are registered.
 	 */
@@ -50,16 +55,19 @@ public class User {
 	 * @param username Username of the new user
 	 * @param password Password of the new user
 	 */
-	public User(String username, String password) {
+	public User(String username, String password) throws UserAlreadyExistsException {
+		if (users.containsKey(username))
+			throw new UserAlreadyExistsException(username);
 		this.username = username;
 		this.salt = PasswordHash.getSalt();
 		this.passwordHash = PasswordHash.hashPassword(password, this.salt);
-		this.rank = Ranks.User;
+		this.rank = Ranks.USER;
 		users.put(this.username, this);
 	}
 
 	/**
-	 * The initial Loading method that gets the users on program start.  Uses Deserialization
+	 * The initial Loading method that gets the users on program start. Uses
+	 * Deserialization
 	 * 
 	 * @return HashMap of loaded users
 	 */
@@ -67,7 +75,7 @@ public class User {
 									// thrown
 	private static HashMap<String, User> loadUsersInit() {
 		try {
-			File file = new File("users.txt");
+			File file = new File("users");
 			if (!file.exists())
 				return new HashMap<>();
 			HashMap<String, User> users;
@@ -78,13 +86,32 @@ public class User {
 			fis.close();
 			return users;
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			return new HashMap<>();
+			HashMap<String, User> users = new HashMap<>();
+			try {
+				User admin = new User("Admin", "Password");
+				admin.rank = Ranks.ADMIN;
+				users.put("Admin", admin);
+			} catch (UserAlreadyExistsException e) {
+			}
+			return users;
 		} catch (ClassNotFoundException c) {
-			c.printStackTrace();
-			return new HashMap<>();
+			HashMap<String, User> users = new HashMap<>();
+			try {
+				User admin = new User("Admin", "Password");
+				admin.rank = Ranks.ADMIN;
+				users.put("Admin", admin);
+			} catch (UserAlreadyExistsException e) {
+			}
+			return users;
 		} catch (ClassCastException e) {
-			return new HashMap<>();
+			HashMap<String, User> users = new HashMap<>();
+			try {
+				User admin = new User("Admin", "Password");
+				admin.rank = Ranks.ADMIN;
+				users.put("Admin", admin);
+			} catch (UserAlreadyExistsException evt) {
+			}
+			return users;
 		}
 	}
 
@@ -95,7 +122,7 @@ public class User {
 	 * @return Whether or not the user is a moderator
 	 */
 	public static boolean isModerator(User user) {
-		return user.rank == Ranks.Moderator || user.rank == Ranks.Admin;
+		return user.rank == Ranks.MODERATOR || user.rank == Ranks.ADMIN;
 	}
 
 	/**
@@ -105,7 +132,7 @@ public class User {
 	 * @return Whether or not the user is an admin
 	 */
 	public static boolean isAdmin(User user) {
-		return user.rank == Ranks.Admin;
+		return user.rank == Ranks.ADMIN;
 	}
 
 	/**
@@ -158,8 +185,58 @@ public class User {
 	 * 
 	 * @param entry Entry object of game / app to remove
 	 */
-	public void remvoeFavorite(Entry entry) {
+	public void removeFavorite(Entry entry) {
 		favorites.remove(entry);
+	}
+
+	/**
+	 * Public getter for username
+	 * 
+	 * @return Username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * Changes the user's password
+	 * 
+	 * @param username    Username of user to change password
+	 * @param oldpassword Current password of user
+	 * @param newpassword New Password of user
+	 * @return If the password change was successful (a false will indicate invalid
+	 *         login)
+	 */
+	public static boolean changePassword(String username, String oldpassword, String newpassword) {
+		User user = login(username, oldpassword);
+		if (user == null)
+			return false;
+		// Generate New Salt, Helps with security.
+		user.salt = PasswordHash.getSalt();
+		user.passwordHash = PasswordHash.hashPassword(newpassword, user.salt);
+		return true;
+	}
+
+	/**
+	 * Gives the ability to change the rank of a user.
+	 * 
+	 * @param adminUser
+	 * @param adminPass
+	 * @param promotedUsername
+	 * @return Status code. -1: failed login 0: success 1: no permission (not an
+	 *         admin user) 2: Promoted user does not exist
+	 */
+	public static int changeRank(String adminUser, String adminPass, String promotedUsername, Ranks rank) {
+		User admin = login(adminUser, adminPass);
+		if (admin == null)
+			return -1;
+		if (!isAdmin(admin))
+			return 1;
+		User target = users.get(promotedUsername);
+		if (target == null)
+			return 2;
+		target.rank = rank;
+		return 0;
 	}
 
 	/**
@@ -167,7 +244,7 @@ public class User {
 	 */
 	public static void storeToFile() {
 		try {
-			FileOutputStream fos = new FileOutputStream("users.txt");
+			FileOutputStream fos = new FileOutputStream("users");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(users);
 			oos.close();
