@@ -28,16 +28,20 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import com.brogrammers.projecttrump.user.User;
+
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.CardLayout;
 import java.awt.Label;
 import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
 import java.awt.FlowLayout;
 
-public class GUI extends JFrame{
+class GUI extends JFrame implements WindowListener{
 
 	private JPanel contentPane;
 
@@ -104,7 +108,9 @@ public class GUI extends JFrame{
 		JButton btnNewButton_1 = new JButton("Logout");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(ABORT);
+				User.storeToFile();
+				Entry.storeToFile();
+				System.exit(0);
 			}
 		});
 		btnNewButton_1.setFont(new Font("Bahnschrift", Font.BOLD, 13));
@@ -231,12 +237,58 @@ public class GUI extends JFrame{
 				for(TreePath path : paths) {
 					String temp = path.getLastPathComponent().toString(); // converts node to string
 					if (temp.equals("Tic Tac Toe")) {
-						TicTacToeGame.main(null);
+						//TicTacToeGame.main(null);
 					}
 				} 
 			}
 		});
+		addWindowListener(this);
 	}
+
+
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+	}
+
+
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		User.storeToFile();
+		Entry.storeToFile();
+	}
+
+
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+	}
+
+
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+	}
+
+
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+	}
+
+
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+	}
+
+
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+	}
+	
 }
 
 
