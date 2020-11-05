@@ -1,27 +1,28 @@
 package com.brogrammers.projecttrump.gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JPasswordField;
 import java.awt.Color;
-import javax.swing.JLabel;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
 import java.awt.Panel;
-import java.awt.Label;
 import java.awt.Toolkit;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
+import java.awt.event.ActionListener;
 
-public class login extends JFrame {
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import com.brogrammers.projecttrump.user.User;
+import com.brogrammers.projecttrump.user.UserAlreadyExistsException;
+
+public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JPasswordField passwordField;
@@ -31,7 +32,7 @@ public class login extends JFrame {
 	private Panel panel_1;
 	private Panel panel_2;
 	private JLabel label;
-	private static login frame = new login();
+	private static Login frame = new Login();
 
 	/**
 	 * Launch the application.
@@ -51,7 +52,7 @@ public class login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public login() {
+	public Login() {
 		setResizable(false);
 		setTitle("Project Trump");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Luket\\Desktop\\project trump small logo.JPG"));
@@ -99,8 +100,9 @@ public class login extends JFrame {
 		JButton btnNewButton = new JButton("Login");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (User.login(textField.getText(), passwordField.getText()) != null) {
-					GUI.main(textField.getText());
+				User user = User.login(textField.getText(), passwordField.getText());
+				if (user != null) {
+					GUI.main(user);
 					frame.dispose();
 				} else {
 					txtpnTest.setText("Username or password incorrect!");
@@ -115,7 +117,7 @@ public class login extends JFrame {
 		JButton btnNewButton_1 = new JButton("Guest Mode\r\n");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				GUI.main("Guest");
+				GUI.main(null);
 				frame.dispose();
 			}
 		});

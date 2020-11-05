@@ -31,17 +31,17 @@ import com.brogrammers.projecttrump.user.User;
 class GUI extends JFrame implements WindowListener{
 
 	private JPanel contentPane;
-
+	User user;
 
 	/**
 	 * Launch the application.
 	 * String username is the name of the user.
 	 */
-	public static void main(String username) {
+	public static void main(User user) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI frame = new GUI(username); // RENAME TO ResizableGUI (IM TALKING TO YOU, LUKE) <---------------------------
+					GUI frame = new GUI(user); // RENAME TO ResizableGUI (IM TALKING TO YOU, LUKE) <---------------------------
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,7 +55,7 @@ class GUI extends JFrame implements WindowListener{
 	/**
 	 * Create the frame.
 	 */
-	public GUI(String username) {
+	public GUI(User user) {
 		setTitle("Project Trump");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 500);
@@ -71,6 +71,9 @@ class GUI extends JFrame implements WindowListener{
 		gbl_contentPane.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 
+		// Sets User
+		this.user = user;
+		
 		// "Welcome" Panel
 		JPanel panel_0 = new JPanel();
 		panel_0.setBorder(new LineBorder(Color.GRAY, 2));
@@ -84,7 +87,7 @@ class GUI extends JFrame implements WindowListener{
 		contentPane.add(panel_0, gbc_panel_0);
 
 		// Creating the "Welcome Guest Label
-		JLabel lblNewLabel = new JLabel("Welcome, " + username);
+		JLabel lblNewLabel = new JLabel("Welcome, " + ((user == null) ? "Guest" :user.getUsername()));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(new Color(220, 20, 60));
 		lblNewLabel.setFont(new Font("Bahnschrift", Font.BOLD, 24));
