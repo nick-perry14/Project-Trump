@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="run" name="project-trump">
+	<property environment="env" />
+	<property name="junit.output.dir" value="junit" />
+	<property name="debuglevel" value="source,lines,vars" />
+	<property name="target" value="1.8" />
+	<property name="source" value="1.8" />
+	<path id="JUnit 4.libraryclasspath">
+		<pathelement location="../../eclipse/java-2020-06/eclipse/plugins/org.junit_4.13.0.v20200204-1500.jar" />
+		<pathelement location="../../eclipse/java-2020-06/eclipse/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar" />
+	</path>
+	<path id="project-trump.classpath">
+		<pathelement location="bin" />
+		<path refid="JUnit 4.libraryclasspath" />
+	</path>
+	<path id="run.GUI.classpath">
+		<path refid="project-trump.classpath" />
+		<path refid="JUnit 4.libraryclasspath" />
+	</path>
+	<path id="run.Login.classpath">
+		<path refid="project-trump.classpath" />
+		<path refid="JUnit 4.libraryclasspath" />
+	</path>
+	<path id="run.UserTest.classpath">
+		<path refid="project-trump.classpath" />
+		<path refid="JUnit 4.libraryclasspath" />
+	</path>
+	<path id="run.UserTest.testException.classpath">
+		<path refid="project-trump.classpath" />
+		<path refid="JUnit 4.libraryclasspath" />
+	</path>
+	<path id="run.UserTest.testHash.classpath">
+		<path refid="project-trump.classpath" />
+		<path refid="JUnit 4.libraryclasspath" />
+	</path>
+	<target name="compile">
+		<mkdir dir="build/classes" />
+		<javac srcdir="src" destdir="build/classes" />
+	</target>
+
+	<target name="jar">
+		<mkdir dir="build/jar" />
+		<jar destfile="build/jar/ProjectTrump.jar" basedir="build/classes">
+			<manifest>
+				<attribute name="Main-Class" value="com.brogrammers.projecttrump.gui.Login" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run">
+		<java jar="build/jar/ProjectTrump.jar" fork="true" />
+	</target>
+</project>
