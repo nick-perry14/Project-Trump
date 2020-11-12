@@ -72,7 +72,6 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbl_contentPane.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		
 		btnNewGame = new JButton("Start Game");
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -393,7 +392,7 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_btnNewButton.gridx = 0;
 		gbc_btnNewButton.gridy = 0;
 		contentPane.add(btnNewButton, gbc_btnNewButton);
-		
+		startGame();
 		}
 
 	// Implement Back-end
