@@ -1,25 +1,20 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import javax.swing.JButton;
-import java.awt.GridBagConstraints;
-import java.awt.Font;
+package com.brogrammers.projecttrump.games;
+
 import java.awt.Button;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import java.awt.event.ActionEvent;
-import java.awt.Insets;
-import javax.swing.JTextPane;
-import java.awt.Color;
-import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextPane;
 
 public class TicTacToeGame extends JFrame {
 
@@ -43,7 +38,6 @@ public class TicTacToeGame extends JFrame {
 	public static int numInput;
 	public static String winner = null;
 
-
 	/**
 	 * Launch the application.
 	 */
@@ -52,7 +46,7 @@ public class TicTacToeGame extends JFrame {
 			public void run() {
 				try {
 					TicTacToeGame frame = new TicTacToeGame();
-						frame.setVisible(true);
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -65,7 +59,7 @@ public class TicTacToeGame extends JFrame {
 	 */
 	public TicTacToeGame() {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 570, 640);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.white);
@@ -107,7 +101,7 @@ public class TicTacToeGame extends JFrame {
 		button = new Button("1");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if ((button.getLabel() != "X") && (button.getLabel() != "O")) {
+				if (button.isEnabled()) {
 					numInput = 1;
 					if (turn == "X") {
 						button.setLabel("X");
@@ -120,6 +114,7 @@ public class TicTacToeGame extends JFrame {
 						board[0] = "O";
 						check();
 					}
+					button.setEnabled(false);
 				}
 			}
 		});
@@ -135,7 +130,6 @@ public class TicTacToeGame extends JFrame {
 		button_1 = new Button("2");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if ((button_1.getLabel() != "X") && (button_1.getLabel() != "O")) {
 					numInput = 2;
 					if (turn == "X") {
 						button_1.setLabel("X");
@@ -148,7 +142,7 @@ public class TicTacToeGame extends JFrame {
 						board[1] = "O";
 						check();
 					}
-				}
+					button_1.setEnabled(false);
 			}
 		});
 		button_1.setForeground(new Color(220, 20, 60));
@@ -163,7 +157,6 @@ public class TicTacToeGame extends JFrame {
 		button_2 = new Button("3");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if ((button_2.getLabel() != "X") && (button_2.getLabel() != "O")) {
 					numInput = 3;
 					if (turn == "X") {
 						button_2.setLabel("X");
@@ -176,7 +169,7 @@ public class TicTacToeGame extends JFrame {
 						board[2] = "O";
 						check();
 					}
-				}
+					button_2.setEnabled(false);
 			}
 		});
 		button_2.setForeground(new Color(220, 20, 60));
@@ -191,7 +184,6 @@ public class TicTacToeGame extends JFrame {
 		button_3 = new Button("4");
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if ((button_3.getLabel() != "X") && (button_3.getLabel() != "O")) {
 					numInput = 4;
 					if (turn == "X") {
 						button_3.setLabel("X");
@@ -204,7 +196,7 @@ public class TicTacToeGame extends JFrame {
 						board[3] = "O";
 						check();
 					}
-				}
+					button_3.setEnabled(false);
 			}
 		});
 		button_3.setForeground(new Color(220, 20, 60));
@@ -219,7 +211,6 @@ public class TicTacToeGame extends JFrame {
 		button_4 = new Button("5");
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if ((button_4.getLabel() != "X") && (button_4.getLabel() != "O")) {
 					numInput = 5;
 					if (turn == "X") {
 						button_4.setLabel("X");
@@ -232,7 +223,7 @@ public class TicTacToeGame extends JFrame {
 						board[4] = "O";
 						check();
 					}
-				}
+					button_4.setEnabled(false);
 			}
 		});
 		button_4.setForeground(new Color(220, 20, 60));
@@ -247,7 +238,6 @@ public class TicTacToeGame extends JFrame {
 		button_5 = new Button("6");
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if ((button_5.getLabel() != "X") && (button_5.getLabel() != "O")) {
 					numInput = 6;
 					if (turn == "X") {
 						button_5.setLabel("X");
@@ -259,8 +249,8 @@ public class TicTacToeGame extends JFrame {
 						turn = "X";
 						board[5] = "O";
 						check();
-					}
 				}
+				button_5.setEnabled(false);
 			}
 		});
 		button_5.setForeground(new Color(220, 20, 60));
@@ -275,7 +265,6 @@ public class TicTacToeGame extends JFrame {
 		button_6 = new Button("7");
 		button_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if ((button_6.getLabel() != "X") && (button_6.getLabel() != "O")) {
 					numInput = 7;
 					if (turn == "X") {
 						button_6.setLabel("X");
@@ -288,7 +277,7 @@ public class TicTacToeGame extends JFrame {
 						board[6] = "O";
 						check();
 					}
-				}
+					button_6.setEnabled(false);
 			}
 		});
 		button_6.setForeground(new Color(220, 20, 60));
@@ -303,7 +292,6 @@ public class TicTacToeGame extends JFrame {
 		button_7 = new Button("8");
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if ((button_7.getLabel() != "X") && (button_7.getLabel() != "O")) {
 					numInput = 8;
 					if (turn == "X") {
 						button_7.setLabel("X");
@@ -316,8 +304,8 @@ public class TicTacToeGame extends JFrame {
 						board[7] = "O";
 						check();
 					}
+					button_7.setEnabled(false);
 				}
-			}
 		});
 		button_7.setForeground(new Color(220, 20, 60));
 		button_7.setFont(new Font("Bahnschrift", Font.BOLD, 90));
@@ -331,7 +319,6 @@ public class TicTacToeGame extends JFrame {
 		button_8 = new Button("9");
 		button_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if ((button_8.getLabel() != "X") && (button_8.getLabel() != "O")) {
 					numInput = 9;
 					if (turn == "X") {
 						button_8.setLabel("X");
@@ -344,7 +331,7 @@ public class TicTacToeGame extends JFrame {
 						board[8] = "O";
 						check();
 					}
-				}
+					button_8.setEnabled(false);
 			}
 		});
 		button_8.setForeground(new Color(220, 20, 60));
@@ -409,8 +396,8 @@ public class TicTacToeGame extends JFrame {
 		contentPane.add(btnNewButton, gbc_btnNewButton);
 		
 		}
-	
-		// Implement Back-end
+
+	// Implement Back-end
 
 	public static void startGame() {
 		board = new String[9];
@@ -451,9 +438,11 @@ public class TicTacToeGame extends JFrame {
 			}
 			if (line.equals("XXX")) {
 				txt.setText("X Wins! Thank You For Playing!");
+				fillBoard();
 				return;
 			} else if (line.equals("OOO")) {
 				txt.setText("O Wins! Thank You For Playing");
+				fillBoard();
 				return;
 			} else {
 				txt.setText(turn + "'s turn; enter a slot number to place " + turn + " in:");
@@ -464,15 +453,24 @@ public class TicTacToeGame extends JFrame {
 			if (Arrays.asList(board).contains(String.valueOf(a + 1))) {
 				break;
 			} else if (a == 8)
-			txt.setText("Draw!");
+				txt.setText("Draw!");
 		}
 
-
 	}
-
+	static void fillBoard() {
+		button.setEnabled(false);
+		button_1.setEnabled(false);
+		button_2.setEnabled(false);
+		button_3.setEnabled(false);
+		button_4.setEnabled(false);
+		button_5.setEnabled(false);
+		button_6.setEnabled(false);
+		button_7.setEnabled(false);
+		button_8.setEnabled(false);
+	}
 	static void emptyBoard() {
 		for (int a = 0; a < 9; a++) {
-			board[a] = String.valueOf(a+1);
+			board[a] = String.valueOf(a + 1);
 		}
 		button.setLabel("1");
 		button_1.setLabel("2");
@@ -483,9 +481,15 @@ public class TicTacToeGame extends JFrame {
 		button_6.setLabel("7");
 		button_7.setLabel("8");
 		button_8.setLabel("9");
+		button.setEnabled(true);
+		button_1.setEnabled(true);
+		button_2.setEnabled(true);
+		button_3.setEnabled(true);
+		button_4.setEnabled(true);
+		button_5.setEnabled(true);
+		button_6.setEnabled(true);
+		button_7.setEnabled(true);
+		button_8.setEnabled(true);
 	}
-		
+
 }
-
-
-
