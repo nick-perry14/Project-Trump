@@ -19,6 +19,8 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.brogrammers.projecttrump.user.User;
+import com.brogrammers.projecttrump.user.UserAlreadyExistsException;
 
 public class Login extends JFrame {
 
