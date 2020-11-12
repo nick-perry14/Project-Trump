@@ -132,7 +132,7 @@ public abstract class Entry implements Serializable {
 			entries.add(new WebEntry("Instagram", "Facebook", (byte) 5, Category.SOCIAL, "https://instagram.com"));
 			;
 			entries.add(new WebEntry("Miami Univ", "MiamiOH", (byte) 5, null, "https://miamioh.edu"));
-			entries.add(new WebEntry("Instagram", "Facebook", (byte) 5, Category.SOCIAL, "https://facebook.com"));
+			entries.add(new WebEntry("Facebook", "Facebook", (byte) 5, Category.SOCIAL, "https://facebook.com"));
 			entries.add(
 					new WebEntry("Yahoo Finance", "Yahoo", (byte) 5, Category.BUSINESS, "https://finance.yahoo.com"));
 		}
