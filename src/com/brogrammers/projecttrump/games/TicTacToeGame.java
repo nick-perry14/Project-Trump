@@ -9,6 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.Arrays;
 
 import javax.swing.JButton;
@@ -16,7 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
-public class TicTacToeGame extends JFrame {
+public class TicTacToeGame extends JFrame implements Serializable{
 
 	public static JPanel contentPane;
 	public static String[] board;
