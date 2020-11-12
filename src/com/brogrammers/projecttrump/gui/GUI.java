@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -63,6 +64,7 @@ class GUI extends JFrame implements WindowListener {
 	public GUI(User user) {
 		setTitle("Project Trump");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("images/project_trump_small_logo.png")));
 		setBounds(100, 100, 700, 500);
 		Dimension d = new Dimension(700, 500);
 		setMinimumSize(d);

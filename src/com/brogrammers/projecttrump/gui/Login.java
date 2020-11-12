@@ -23,7 +23,7 @@ import com.brogrammers.projecttrump.user.User;
 import com.brogrammers.projecttrump.user.UserAlreadyExistsException;
 
 public class Login extends JFrame {
-
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
@@ -55,7 +55,7 @@ public class Login extends JFrame {
 	public Login() {
 		setResizable(false);
 		setTitle("Project Trump");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Luket\\Desktop\\project trump small logo.JPG"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("images/project_trump_small_logo.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 787, 519);
 		contentPane = new JPanel();
@@ -100,6 +100,7 @@ public class Login extends JFrame {
 		JButton btnNewButton = new JButton("Login");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("deprecation")
 				User user = User.login(textField.getText(), passwordField.getText());
 				if (user != null) {
 					GUI.main(user);
@@ -130,6 +131,7 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
+					@SuppressWarnings("deprecation")
 					User a = new User(textField.getText(), passwordField.getText());
 					txtpnTest.setText("User " + a.getUsername() + " created");
 					User.storeToFile();
@@ -167,7 +169,7 @@ public class Login extends JFrame {
 		
 		label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon("C:\\Users\\Luket\\Desktop\\project trump big logo 2.JPG"));
+		label.setIcon(new ImageIcon(getClass().getResource("images/project_trump_small_logo.png")));
 		label.setBounds(10, 11, 283, 282);
 		panel_2.add(label);
 	}
