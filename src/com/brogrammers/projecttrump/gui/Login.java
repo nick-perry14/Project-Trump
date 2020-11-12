@@ -118,7 +118,7 @@ public class Login extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				GUI.main(null);
-				frame.dispose();
+				dispose();
 			}
 		});
 		btnNewButton_1.setBounds(157, 197, 121, 35);
@@ -132,7 +132,10 @@ public class Login extends JFrame {
 				try {
 					User a = new User(textField.getText(), passwordField.getText());
 					txtpnTest.setText("User " + a.getUsername() + " created");
-					a.storeToFile();
+					User.storeToFile();
+					GUI.main(a);
+					dispose();
+					
 				} catch (UserAlreadyExistsException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
