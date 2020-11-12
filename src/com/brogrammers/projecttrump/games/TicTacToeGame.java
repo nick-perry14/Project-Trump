@@ -101,7 +101,6 @@ public class TicTacToeGame extends JFrame {
 		button = new Button("1");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (button.isEnabled()) {
 					numInput = 1;
 					if (turn == "X") {
 						button.setLabel("X");
@@ -115,7 +114,6 @@ public class TicTacToeGame extends JFrame {
 						check();
 					}
 					button.setEnabled(false);
-				}
 			}
 		});
 		button.setBackground(new Color(255, 255, 255));
