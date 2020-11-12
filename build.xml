@@ -26,18 +26,6 @@
 		<path refid="project-trump.classpath" />
 		<path refid="JUnit 4.libraryclasspath" />
 	</path>
-	<path id="run.UserTest.classpath">
-		<path refid="project-trump.classpath" />
-		<path refid="JUnit 4.libraryclasspath" />
-	</path>
-	<path id="run.UserTest.testException.classpath">
-		<path refid="project-trump.classpath" />
-		<path refid="JUnit 4.libraryclasspath" />
-	</path>
-	<path id="run.UserTest.testHash.classpath">
-		<path refid="project-trump.classpath" />
-		<path refid="JUnit 4.libraryclasspath" />
-	</path>
 	<target name="compile">
 		<mkdir dir="build/classes" />
 		<javac srcdir="src" destdir="build/classes" />
@@ -49,6 +37,9 @@
 			<manifest>
 				<attribute name="Main-Class" value="com.brogrammers.projecttrump.gui.Login" />
 			</manifest>
+			 <fileset dir="src">
+			            <include name="com/brogrammers/projecttrump/gui/images/*.png" />
+			 </fileset>
 		</jar>
 	</target>
 
