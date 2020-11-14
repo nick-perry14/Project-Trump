@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.brogrammers.projecttrump.entries.Entry;
+import com.brogrammers.projecttrump.gui.entries.Entry;
 
 /**
  * Class designed to hold user login and favorite information

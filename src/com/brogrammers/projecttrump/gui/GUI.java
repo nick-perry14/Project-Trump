@@ -31,9 +31,9 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.JTextField;
 
-import com.brogrammers.projecttrump.entries.Category;
-import com.brogrammers.projecttrump.entries.Entry;
-import com.brogrammers.projecttrump.entries.EntryMutableTreeNode;
+import com.brogrammers.projecttrump.gui.entries.Category;
+import com.brogrammers.projecttrump.gui.entries.Entry;
+import com.brogrammers.projecttrump.gui.entries.EntryMutableTreeNode;
 import com.brogrammers.projecttrump.user.User;
 
 /**

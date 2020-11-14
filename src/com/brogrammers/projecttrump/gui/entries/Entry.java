@@ -1,4 +1,4 @@
-package com.brogrammers.projecttrump.entries;
+package com.brogrammers.projecttrump.gui.entries;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,7 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.brogrammers.projecttrump.games.TicTacToeGame;
 import com.brogrammers.projecttrump.user.User;

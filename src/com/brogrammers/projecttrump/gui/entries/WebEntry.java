@@ -1,4 +1,4 @@
-package com.brogrammers.projecttrump.entries;
+package com.brogrammers.projecttrump.gui.entries;
 
 import java.awt.Desktop;
 import java.io.IOException;

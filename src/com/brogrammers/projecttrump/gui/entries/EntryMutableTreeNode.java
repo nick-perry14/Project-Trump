@@ -1,4 +1,4 @@
-package com.brogrammers.projecttrump.entries;
+package com.brogrammers.projecttrump.gui.entries;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
