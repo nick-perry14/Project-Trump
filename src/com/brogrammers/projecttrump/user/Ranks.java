@@ -7,6 +7,6 @@ import java.io.Serializable;
  * @author Nick Perry
  *
  */
-enum Ranks implements Serializable {
+public enum Ranks implements Serializable {
 USER, MODERATOR, ADMIN
 }

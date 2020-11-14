@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.brogrammers.projecttrump.gui.Entry;
+import com.brogrammers.projecttrump.gui.entries.Entry;
 
 /**
  * Class designed to hold user login and favorite information
@@ -231,5 +231,10 @@ public class User implements Serializable {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
+	}
+
+	public Ranks getRank() {
+		// TODO Auto-generated method stub
+		return rank;
 	}
 }
