@@ -1,4 +1,4 @@
-package com.brogrammers.projecttrump.gui.entries;
+package com.brogrammers.projecttrump.entries;
 
 /**
  * Enumerated type for categories of entries
