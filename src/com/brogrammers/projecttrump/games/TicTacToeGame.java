@@ -17,7 +17,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
-public class TicTacToeGame extends JFrame implements Serializable{
+/**
+ * 
+ * 
+ * @author Xuqi Chen
+ *
+ */
+public class TicTacToeGame extends JFrame implements Serializable {
 
 	public static JPanel contentPane;
 	public static String[] board;
@@ -67,10 +73,10 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		contentPane.setBorder(null);
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{180, 180, 180, 0};
-		gbl_contentPane.rowHeights = new int[]{39, 160, 160, 160, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[] { 180, 180, 180, 0 };
+		gbl_contentPane.rowHeights = new int[] { 39, 160, 160, 160, 0, 0 };
+		gbl_contentPane.columnWeights = new double[] { 1.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 		btnNewGame = new JButton("Start Game");
 		btnNewGame.addActionListener(new ActionListener() {
@@ -84,7 +90,7 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_btnNewGame.gridx = 1;
 		gbc_btnNewGame.gridy = 0;
 		contentPane.add(btnNewGame, gbc_btnNewGame);
-		
+
 		btnNewButton_1 = new JButton("Exit");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -97,23 +103,23 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_btnNewButton_1.gridx = 2;
 		gbc_btnNewButton_1.gridy = 0;
 		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
-		
+
 		button = new Button("1");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					numInput = 1;
-					if (turn == "X") {
-						button.setLabel("X");
-						turn = "O";
-						board[0] = "X";
-						check();
-					} else if (turn == "O") {
-						button.setLabel("O");
-						turn = "X";
-						board[0] = "O";
-						check();
-					}
-					button.setEnabled(false);
+				numInput = 1;
+				if (turn == "X") {
+					button.setLabel("X");
+					turn = "O";
+					board[0] = "X";
+					check();
+				} else if (turn == "O") {
+					button.setLabel("O");
+					turn = "X";
+					board[0] = "O";
+					check();
+				}
+				button.setEnabled(false);
 			}
 		});
 		button.setBackground(new Color(255, 255, 255));
@@ -124,23 +130,23 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_button.gridx = 0;
 		gbc_button.gridy = 1;
 		contentPane.add(button, gbc_button);
-		
+
 		button_1 = new Button("2");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					numInput = 2;
-					if (turn == "X") {
-						button_1.setLabel("X");
-						turn = "O";
-						board[1] = "X";
-						check();
-					} else if (turn == "O") {
-						button_1.setLabel("O");
-						turn = "X";
-						board[1] = "O";
-						check();
-					}
-					button_1.setEnabled(false);
+				numInput = 2;
+				if (turn == "X") {
+					button_1.setLabel("X");
+					turn = "O";
+					board[1] = "X";
+					check();
+				} else if (turn == "O") {
+					button_1.setLabel("O");
+					turn = "X";
+					board[1] = "O";
+					check();
+				}
+				button_1.setEnabled(false);
 			}
 		});
 		button_1.setForeground(new Color(220, 20, 60));
@@ -151,23 +157,23 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_button_1.gridx = 1;
 		gbc_button_1.gridy = 1;
 		contentPane.add(button_1, gbc_button_1);
-		
+
 		button_2 = new Button("3");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					numInput = 3;
-					if (turn == "X") {
-						button_2.setLabel("X");
-						turn = "O";
-						board[2] = "X";
-						check();
-					} else if (turn == "O") {
-						button_2.setLabel("O");
-						turn = "X";
-						board[2] = "O";
-						check();
-					}
-					button_2.setEnabled(false);
+				numInput = 3;
+				if (turn == "X") {
+					button_2.setLabel("X");
+					turn = "O";
+					board[2] = "X";
+					check();
+				} else if (turn == "O") {
+					button_2.setLabel("O");
+					turn = "X";
+					board[2] = "O";
+					check();
+				}
+				button_2.setEnabled(false);
 			}
 		});
 		button_2.setForeground(new Color(220, 20, 60));
@@ -178,23 +184,23 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_button_2.gridx = 2;
 		gbc_button_2.gridy = 1;
 		contentPane.add(button_2, gbc_button_2);
-		
+
 		button_3 = new Button("4");
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					numInput = 4;
-					if (turn == "X") {
-						button_3.setLabel("X");
-						turn = "O";
-						board[3] = "X";
-						check();
-					} else if (turn == "O") {
-						button_3.setLabel("O");
-						turn = "X";
-						board[3] = "O";
-						check();
-					}
-					button_3.setEnabled(false);
+				numInput = 4;
+				if (turn == "X") {
+					button_3.setLabel("X");
+					turn = "O";
+					board[3] = "X";
+					check();
+				} else if (turn == "O") {
+					button_3.setLabel("O");
+					turn = "X";
+					board[3] = "O";
+					check();
+				}
+				button_3.setEnabled(false);
 			}
 		});
 		button_3.setForeground(new Color(220, 20, 60));
@@ -205,23 +211,23 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_button_3.gridx = 0;
 		gbc_button_3.gridy = 2;
 		contentPane.add(button_3, gbc_button_3);
-		
+
 		button_4 = new Button("5");
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					numInput = 5;
-					if (turn == "X") {
-						button_4.setLabel("X");
-						turn = "O";
-						board[4] = "X";
-						check();
-					} else if (turn == "O") {
-						button_4.setLabel("O");
-						turn = "X";
-						board[4] = "O";
-						check();
-					}
-					button_4.setEnabled(false);
+				numInput = 5;
+				if (turn == "X") {
+					button_4.setLabel("X");
+					turn = "O";
+					board[4] = "X";
+					check();
+				} else if (turn == "O") {
+					button_4.setLabel("O");
+					turn = "X";
+					board[4] = "O";
+					check();
+				}
+				button_4.setEnabled(false);
 			}
 		});
 		button_4.setForeground(new Color(220, 20, 60));
@@ -232,21 +238,21 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_button_4.gridx = 1;
 		gbc_button_4.gridy = 2;
 		contentPane.add(button_4, gbc_button_4);
-		
+
 		button_5 = new Button("6");
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					numInput = 6;
-					if (turn == "X") {
-						button_5.setLabel("X");
-						turn = "O";
-						board[5] = "X";
-						check();
-					} else if (turn == "O") {
-						button_5.setLabel("O");
-						turn = "X";
-						board[5] = "O";
-						check();
+				numInput = 6;
+				if (turn == "X") {
+					button_5.setLabel("X");
+					turn = "O";
+					board[5] = "X";
+					check();
+				} else if (turn == "O") {
+					button_5.setLabel("O");
+					turn = "X";
+					board[5] = "O";
+					check();
 				}
 				button_5.setEnabled(false);
 			}
@@ -259,23 +265,23 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_button_5.gridx = 2;
 		gbc_button_5.gridy = 2;
 		contentPane.add(button_5, gbc_button_5);
-		
+
 		button_6 = new Button("7");
 		button_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					numInput = 7;
-					if (turn == "X") {
-						button_6.setLabel("X");
-						turn = "O";
-						board[6] = "X";
-						check();
-					} else if (turn == "O") {
-						button_6.setLabel("O");
-						turn = "X";
-						board[6] = "O";
-						check();
-					}
-					button_6.setEnabled(false);
+				numInput = 7;
+				if (turn == "X") {
+					button_6.setLabel("X");
+					turn = "O";
+					board[6] = "X";
+					check();
+				} else if (turn == "O") {
+					button_6.setLabel("O");
+					turn = "X";
+					board[6] = "O";
+					check();
+				}
+				button_6.setEnabled(false);
 			}
 		});
 		button_6.setForeground(new Color(220, 20, 60));
@@ -286,24 +292,24 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_button_6.gridx = 0;
 		gbc_button_6.gridy = 3;
 		contentPane.add(button_6, gbc_button_6);
-		
+
 		button_7 = new Button("8");
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					numInput = 8;
-					if (turn == "X") {
-						button_7.setLabel("X");
-						turn = "O";
-						board[7] = "X";
-						check();
-					} else if (turn == "O") {
-						button_7.setLabel("O");
-						turn = "X";
-						board[7] = "O";
-						check();
-					}
-					button_7.setEnabled(false);
+				numInput = 8;
+				if (turn == "X") {
+					button_7.setLabel("X");
+					turn = "O";
+					board[7] = "X";
+					check();
+				} else if (turn == "O") {
+					button_7.setLabel("O");
+					turn = "X";
+					board[7] = "O";
+					check();
 				}
+				button_7.setEnabled(false);
+			}
 		});
 		button_7.setForeground(new Color(220, 20, 60));
 		button_7.setFont(new Font("Bahnschrift", Font.BOLD, 90));
@@ -313,23 +319,23 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_button_7.gridx = 1;
 		gbc_button_7.gridy = 3;
 		contentPane.add(button_7, gbc_button_7);
-		
+
 		button_8 = new Button("9");
 		button_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					numInput = 9;
-					if (turn == "X") {
-						button_8.setLabel("X");
-						turn = "O";
-						board[8] = "X";
-						check();
-					} else if (turn == "O") {
-						button_8.setLabel("O");
-						turn = "X";
-						board[8] = "O";
-						check();
-					}
-					button_8.setEnabled(false);
+				numInput = 9;
+				if (turn == "X") {
+					button_8.setLabel("X");
+					turn = "O";
+					board[8] = "X";
+					check();
+				} else if (turn == "O") {
+					button_8.setLabel("O");
+					turn = "X";
+					board[8] = "O";
+					check();
+				}
+				button_8.setEnabled(false);
 			}
 		});
 		button_8.setForeground(new Color(220, 20, 60));
@@ -340,7 +346,7 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_button_8.gridx = 2;
 		gbc_button_8.gridy = 3;
 		contentPane.add(button_8, gbc_button_8);
-		
+
 		txt = new JTextPane();
 		txt.setEditable(false);
 		txt.setFont(new Font("Bahnschrift", Font.BOLD, 20));
@@ -351,7 +357,7 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_txtpnAdfasdf.gridx = 0;
 		gbc_txtpnAdfasdf.gridy = 4;
 		contentPane.add(txt, gbc_txtpnAdfasdf);
-		
+
 		btnNewButton = new JButton("Dark Mode");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -368,8 +374,7 @@ public class TicTacToeGame extends JFrame implements Serializable{
 					contentPane.setBackground(Color.white);
 					txt.setBackground(Color.white);
 					btnNewButton.setLabel("Dark Mode");
-				}
-				else if (contentPane.getBackground() == Color.white) {
+				} else if (contentPane.getBackground() == Color.white) {
 					button.setBackground(Color.black);
 					button_1.setBackground(Color.black);
 					button_2.setBackground(Color.black);
@@ -385,7 +390,7 @@ public class TicTacToeGame extends JFrame implements Serializable{
 				}
 			}
 		});
-		
+
 		btnNewButton.setFont(new Font("Bahnschrift", Font.BOLD, 12));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
@@ -393,7 +398,7 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		gbc_btnNewButton.gridy = 0;
 		contentPane.add(btnNewButton, gbc_btnNewButton);
 		startGame();
-		}
+	}
 
 	// Implement Back-end
 
@@ -455,6 +460,7 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		}
 
 	}
+
 	static void fillBoard() {
 		button.setEnabled(false);
 		button_1.setEnabled(false);
@@ -466,6 +472,7 @@ public class TicTacToeGame extends JFrame implements Serializable{
 		button_7.setEnabled(false);
 		button_8.setEnabled(false);
 	}
+
 	static void emptyBoard() {
 		for (int a = 0; a < 9; a++) {
 			board[a] = String.valueOf(a + 1);

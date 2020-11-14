@@ -233,6 +233,11 @@ public class User implements Serializable {
 		}
 	}
 
+	/**
+	 * Gets rank of specified user
+	 * 
+	 * @return Rank
+	 */
 	public Ranks getRank() {
 		// TODO Auto-generated method stub
 		return rank;

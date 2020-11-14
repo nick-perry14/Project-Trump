@@ -22,6 +22,12 @@ import javax.swing.border.EmptyBorder;
 import com.brogrammers.projecttrump.user.User;
 import com.brogrammers.projecttrump.user.UserAlreadyExistsException;
 
+/**
+ * Login GUI
+ * 
+ * @author Luke Brown, Nick Perry (backend)
+ *
+ */
 public class Login extends JFrame {
 
 	private JPanel contentPane;
