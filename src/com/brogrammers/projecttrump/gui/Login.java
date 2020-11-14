@@ -23,7 +23,7 @@ import com.brogrammers.projecttrump.user.User;
 import com.brogrammers.projecttrump.user.UserAlreadyExistsException;
 
 public class Login extends JFrame {
-	private static final long serialVersionUID = 1L;
+
 	private JPanel contentPane;
 	private JPasswordField passwordField;
 	private JTextField textField;
@@ -155,7 +155,7 @@ public class Login extends JFrame {
 		panel_1.setBounds(44, 30, 678, 54);
 		contentPane.add(panel_1);
 		
-		lblProjectTrumpV = new JLabel("PROJECT TRUMP V1.1");
+		lblProjectTrumpV = new JLabel("PROJECT TRUMP ");
 		lblProjectTrumpV.setForeground(new Color(220, 20, 60));
 		panel_1.add(lblProjectTrumpV);
 		lblProjectTrumpV.setHorizontalAlignment(SwingConstants.CENTER);
@@ -163,13 +163,13 @@ public class Login extends JFrame {
 		
 		panel_2 = new Panel();
 		panel_2.setLayout(null);
-		panel_2.setBackground(Color.GRAY);
+		panel_2.setBackground(Color.WHITE);
 		panel_2.setBounds(44, 130, 303, 336);
 		contentPane.add(panel_2);
 		
 		label = new JLabel("");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setIcon(new ImageIcon(getClass().getResource("images/project_trump_small_logo.png")));
+	    label.setIcon(new ImageIcon(getClass().getResource("images/project_trump_small_logo.png")));
 		label.setBounds(10, 11, 283, 282);
 		panel_2.add(label);
 	}
