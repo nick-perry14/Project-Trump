@@ -8,7 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.brogrammers.projecttrump.games.TicTacToeGame;
@@ -20,7 +19,6 @@ public abstract class Entry implements Serializable {
 	private String developer;
 	private byte rating;
 	private Category category;
-	private DefaultMutableTreeNode node;
 	protected static ArrayList<Entry> entries = readFromFile();
 	private ArrayList<Comment> comments = new ArrayList<>();
 
@@ -29,7 +27,6 @@ public abstract class Entry implements Serializable {
 		this.developer = developer;
 		this.rating = rating;
 		this.category = category;
-		node = new DefaultMutableTreeNode(name);
 	}
 
 	public String getName() {
@@ -62,10 +59,6 @@ public abstract class Entry implements Serializable {
 
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-
-	public DefaultMutableTreeNode getNode() {
-		return node;
 	}
 
 	public boolean addComment(User user, String content) {
@@ -125,16 +118,14 @@ public abstract class Entry implements Serializable {
 
 	public static void addDefaultGames() {
 		if (entries.isEmpty()) {
-			entries.add(new JavaEntry("Tic Tac Toe", "Brogrammers", (byte) 5, Category.GAME, TicTacToeGame.class));
-			entries.add(new WebEntry("Google", "Alphabet, Inc.", (byte) 5, Category.UTILITY, "https://google.com"));
-			entries.add(new WebEntry("CNN", "CNN", (byte) 5, Category.NEWS, "https://cnn.com"));
-			entries.add(new WebEntry("FOX News", "FOX", (byte) 5, Category.NEWS, "https://foxnews.com"));
-			entries.add(new WebEntry("Instagram", "Facebook", (byte) 5, Category.SOCIAL, "https://instagram.com"));
-			;
-			entries.add(new WebEntry("Miami Univ", "MiamiOH", (byte) 5, null, "https://miamioh.edu"));
-			entries.add(new WebEntry("Facebook", "Facebook", (byte) 5, Category.SOCIAL, "https://facebook.com"));
-			entries.add(
-					new WebEntry("Yahoo Finance", "Yahoo", (byte) 5, Category.BUSINESS, "https://finance.yahoo.com"));
+			new JavaEntry("Tic Tac Toe", "Brogrammers", (byte) 5, Category.GAME, TicTacToeGame.class);
+			new WebEntry("Google", "Alphabet, Inc.", (byte) 5, Category.UTILITY, "https://google.com");
+			new WebEntry("CNN", "CNN", (byte) 5, Category.NEWS, "https://cnn.com");
+			new WebEntry("FOX News", "FOX", (byte) 5, Category.NEWS, "https://foxnews.com");
+			new WebEntry("Instagram", "Facebook", (byte) 5, Category.SOCIAL, "https://instagram.com");
+			new WebEntry("Miami Univ", "MiamiOH", (byte) 5, null, "https://miamioh.edu");
+			new WebEntry("Facebook", "Facebook", (byte) 5, Category.SOCIAL, "https://facebook.com");
+			new WebEntry("Yahoo Finance", "Yahoo", (byte) 5, Category.BUSINESS, "https://finance.yahoo.com");
 		}
 	}
 

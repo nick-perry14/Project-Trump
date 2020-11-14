@@ -33,6 +33,7 @@ import javax.swing.JTextField;
 
 import com.brogrammers.projecttrump.gui.entries.Category;
 import com.brogrammers.projecttrump.gui.entries.Entry;
+import com.brogrammers.projecttrump.gui.entries.EntryMutableTreeNode;
 import com.brogrammers.projecttrump.user.User;
 
 class GUI extends JFrame implements WindowListener{
@@ -164,24 +165,24 @@ class GUI extends JFrame implements WindowListener{
 				for (Entry x : Entry.getEntries()) {
 					Category cat = x.getCategory();
 					if (cat == null) {
-						node_6.add(x.getNode());
+						node_6.add(new EntryMutableTreeNode(x.getName(), x));
 						continue;
 					}
 					switch (cat) {
 					case GAME:
-						node_1.add(x.getNode());
+						node_1.add(new EntryMutableTreeNode(x.getName(), x));
 						break;
 					case UTILITY:
-						node_2.add(x.getNode());
+						node_2.add(new EntryMutableTreeNode(x.getName(), x));
 						break;
 					case SOCIAL:
-						node_3.add(x.getNode());
+						node_3.add(new EntryMutableTreeNode(x.getName(), x));
 						break;
 					case BUSINESS:
-						node_4.add(x.getNode());
+						node_4.add(new EntryMutableTreeNode(x.getName(), x));
 						break;
 					case NEWS:
-						node_5.add(x.getNode());
+						node_5.add(new EntryMutableTreeNode(x.getName(), x));
 						break;
 					}
 
@@ -345,24 +346,24 @@ class GUI extends JFrame implements WindowListener{
 								for (Entry x : Entry.getEntries()) {
 									Category cat = x.getCategory();
 									if (cat == null) {
-										node_6.add(x.getNode());
+										node_6.add(new EntryMutableTreeNode(x.getName(), x));
 										continue;
 									}
 									switch (cat) {
 									case GAME:
-										node_1.add(x.getNode());
+										node_1.add(new EntryMutableTreeNode(x.getName(), x));
 										break;
 									case UTILITY:
-										node_2.add(x.getNode());
+										node_2.add(new EntryMutableTreeNode(x.getName(), x));
 										break;
 									case SOCIAL:
-										node_3.add(x.getNode());
+										node_3.add(new EntryMutableTreeNode(x.getName(), x));
 										break;
 									case BUSINESS:
-										node_4.add(x.getNode());
+										node_4.add(new EntryMutableTreeNode(x.getName(), x));
 										break;
 									case NEWS:
-										node_5.add(x.getNode());
+										node_5.add(new EntryMutableTreeNode(x.getName(), x));
 										break;
 									}
 
@@ -468,12 +469,10 @@ class GUI extends JFrame implements WindowListener{
 				TreePath[] paths = tree.getSelectionPaths();
 				for (TreePath path : paths) {
 					DefaultMutableTreeNode x = (DefaultMutableTreeNode) path.getLastPathComponent();
-					for (Entry ent : Entry.getEntries()) {
-						if (ent.getNode() == x) {
-							ent.run();
+						if (x instanceof EntryMutableTreeNode) {
+							((EntryMutableTreeNode) x).getEntry().run();
 							break;
 						}
-					}
 				}
 			}
 		});
