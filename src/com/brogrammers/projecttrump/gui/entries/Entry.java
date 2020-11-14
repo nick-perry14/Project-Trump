@@ -20,6 +20,7 @@ public abstract class Entry implements Serializable {
 	private byte rating;
 	private Category category;
 	protected static ArrayList<Entry> entries = readFromFile();
+	protected static ArrayList<WebEntry> requests;
 	private ArrayList<Comment> comments = new ArrayList<>();
 
 	public Entry(String name, String developer, byte rating, Category category) {
@@ -90,6 +91,23 @@ public abstract class Entry implements Serializable {
 			String url) {
 		if (User.isAdmin(user)) {
 			new WebEntry(name, developer, rating, category, url);
+		}
+		return false;
+	}
+
+	public static boolean approveRequest(int ID, User user) {
+		if (User.isAdmin(user)) {
+			Entry rem = requests.remove(ID);
+			if (rem != null)
+				entries.add(rem);
+		}
+		return false;
+	}
+
+	public static boolean rejectRequest(int ID, User user) {
+		if (User.isAdmin(user)) {
+			Entry rem = requests.remove(ID);
+			return rem != null;
 		}
 		return false;
 	}
