@@ -8,12 +8,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.brogrammers.projecttrump.games.TicTacToeGame;
 import com.brogrammers.projecttrump.user.User;
 
 /**
  * Abstract class that contains information about entries in the repository.
+ * 
  * @author Nick Perry
  *
  */
@@ -45,7 +47,7 @@ public abstract class Entry implements Serializable {
 	/**
 	 * 
 	 */
-	protected static ArrayList<WebEntry> requests = readReqFromFile();
+	protected static HashMap<WebEntry, User> requests = readReqFromFile();
 	private ArrayList<Comment> comments = new ArrayList<>();
 
 	/**
@@ -185,12 +187,24 @@ public abstract class Entry implements Serializable {
 	}
 
 	/**
+	 * Gives the list of active requests
+	 * 
+	 * @param admin Admin requesting to view list
+	 * @return List, or null if user is not admin.
+	 */
+	public static HashMap<WebEntry, User> getRequests(User admin) {
+		if (User.isAdmin(admin))
+			return requests;
+		return null;
+	}
+
+	/**
 	 * Creates a new entry
 	 * 
 	 * @param user      Admin user executing command
 	 * @param name      Name of new entry
 	 * @param developer Developer of new entry
-	 * @param rating    Rating of new entry (5= E, 4 = E 10+, 3 = T 2 = M, 1 = AO)
+	 * @param rating    Rating of new entry (5= AO, 4 = E M, 3 = T 2 = E 10+, 1 = E)
 	 * @param category  Category of new entry
 	 * @param url       URL of new entry
 	 * @return Whether or not the add was successful
@@ -204,17 +218,34 @@ public abstract class Entry implements Serializable {
 	}
 
 	/**
+	 * Creates a new request
+	 * 
+	 * @param user      Requesting User
+	 * @param name      Name of request
+	 * @param developer Developer of request
+	 * @param rating    Rating of request
+	 * @param category  Category of request
+	 * @param url       URL of request
+	 */
+	public static void addRequest(User user, String name, String developer, byte rating, Category category,
+			String url) {
+		new WebEntry(user, name, developer, rating, category, url);
+	}
+
+	/**
 	 * Approves the specified request
 	 * 
-	 * @param ID   ID of request
-	 * @param user Requester
+	 * @param entry entry of request
+	 * @param user  Requester
 	 * @return Whether or not the approval was successful
 	 */
-	public static boolean approveRequest(int ID, User user) {
+	public static boolean approveRequest(WebEntry entry, User user) {
 		if (User.isAdmin(user)) {
-			Entry rem = requests.remove(ID);
-			if (rem != null)
-				entries.add(rem);
+			User rem = requests.remove(entry);
+			if (rem != null) {
+				entries.add(entry);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -222,13 +253,13 @@ public abstract class Entry implements Serializable {
 	/**
 	 * Rejects the specified request
 	 * 
-	 * @param ID   ID of request
+	 * @param ID   entry of request
 	 * @param user Requester
 	 * @return Whether or not the rejection was successful
 	 */
-	public static boolean rejectRequest(int ID, User user) {
+	public static boolean rejectRequest(WebEntry entry, User user) {
 		if (User.isAdmin(user)) {
-			Entry rem = requests.remove(ID);
+			User rem = requests.remove(entry);
 			return rem != null;
 		}
 		return false;
@@ -242,16 +273,13 @@ public abstract class Entry implements Serializable {
 	 * @return Status Code: -1 = No permission, 0 = Success, 1 = Entry does not
 	 *         exist, 2 = Entry Protected
 	 */
-	public static int removeEntry(User user, int ID) {
+	public static int removeEntry(User user, Entry entry) {
 		if (User.isAdmin(user)) {
-			Entry e = entries.get(ID);
-			if (e != null)
-				if (!(e instanceof JavaEntry))
-					return 0;
-				else
-					return 2;
-			else
-				return 1;
+			if (entry instanceof JavaEntry)
+				return 2;
+			if (entries.remove(entry))
+				return 0;
+			return 1;
 		}
 		return -1;
 	}
@@ -261,14 +289,14 @@ public abstract class Entry implements Serializable {
 	 */
 	public static void addDefaultGames() {
 		if (entries.isEmpty()) {
-			new JavaEntry("Tic Tac Toe", "Brogrammers", (byte) 5, Category.GAME, TicTacToeGame.class);
-			new WebEntry("Google", "Alphabet, Inc.", (byte) 5, Category.UTILITY, "https://google.com");
-			new WebEntry("CNN", "CNN", (byte) 5, Category.NEWS, "https://cnn.com");
-			new WebEntry("FOX News", "FOX", (byte) 5, Category.NEWS, "https://foxnews.com");
-			new WebEntry("Instagram", "Facebook", (byte) 5, Category.SOCIAL, "https://instagram.com");
-			new WebEntry("Miami Univ", "MiamiOH", (byte) 5, null, "https://miamioh.edu");
-			new WebEntry("Facebook", "Facebook", (byte) 5, Category.SOCIAL, "https://facebook.com");
-			new WebEntry("Yahoo Finance", "Yahoo", (byte) 5, Category.BUSINESS, "https://finance.yahoo.com");
+			new JavaEntry("Tic Tac Toe", "Brogrammers", (byte) 1, Category.GAME, TicTacToeGame.class);
+			new WebEntry("Google", "Alphabet, Inc.", (byte) 1, Category.UTILITY, "https://google.com");
+			new WebEntry("CNN", "CNN", (byte) 1, Category.NEWS, "https://cnn.com");
+			new WebEntry("FOX News", "FOX", (byte) 1, Category.NEWS, "https://foxnews.com");
+			new WebEntry("Instagram", "Facebook", (byte) 2, Category.SOCIAL, "https://instagram.com");
+			new WebEntry("Miami Univ", "MiamiOH", (byte) 1, null, "https://miamioh.edu");
+			new WebEntry("Facebook", "Facebook", (byte) 2, Category.SOCIAL, "https://facebook.com");
+			new WebEntry("Yahoo Finance", "Yahoo", (byte) 1, Category.BUSINESS, "https://finance.yahoo.com");
 		}
 	}
 
@@ -312,26 +340,26 @@ public abstract class Entry implements Serializable {
 	 * @return Array list containing requests.
 	 */
 	@SuppressWarnings("unchecked")
-	private static ArrayList<WebEntry> readReqFromFile() {
+	private static HashMap<WebEntry, User> readReqFromFile() {
 		try {
 			File file = new File("requests");
 			if (!file.exists())
-				return new ArrayList<>();
-			ArrayList<WebEntry> reqs;
+				return new HashMap<>();
+			HashMap<WebEntry, User> reqs;
 			FileInputStream fis = new FileInputStream(file);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			reqs = (ArrayList<WebEntry>) ois.readObject();
+			reqs = (HashMap<WebEntry, User>) ois.readObject();
 			ois.close();
 			fis.close();
 			return reqs;
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
-			return new ArrayList<>();
+			return new HashMap<>();
 		} catch (ClassNotFoundException c) {
 			c.printStackTrace();
-			return new ArrayList<>();
+			return new HashMap<>();
 		} catch (ClassCastException e) {
-			return new ArrayList<>();
+			return new HashMap<>();
 		}
 	}
 
@@ -364,6 +392,10 @@ public abstract class Entry implements Serializable {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
+	}
+
+	public String toString() {
+		return name;
 	}
 
 }

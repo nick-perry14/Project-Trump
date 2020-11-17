@@ -8,18 +8,20 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.List;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -29,28 +31,19 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-import javax.swing.JTextField;
 
+import com.brogrammers.projecttrump.gui.admin.AdminPanel;
 import com.brogrammers.projecttrump.gui.entries.Category;
 import com.brogrammers.projecttrump.gui.entries.Entry;
 import com.brogrammers.projecttrump.gui.entries.EntryMutableTreeNode;
 import com.brogrammers.projecttrump.user.User;
 
-/**
- * Main Gui Class
- * 
- * @author Luke Brown (Main), Nick Perry (Contributer)
- *
- */
-class GUI extends JFrame implements WindowListener {
-	/**
-	 * Content pane of GUI
-	 */
+public class GUI extends JFrame implements WindowListener {
+	private GUI instance;
 	private JPanel contentPane;
-	/**
-	 * Current logged in user - null for guest
-	 */
-	User user;
+	private User user;
+	private JTextField textField;
+	private JTree tree;
 
 	/**
 	 * Launch the application. String username is the name of the user.
@@ -150,7 +143,7 @@ class GUI extends JFrame implements WindowListener {
 		panel_1.add(playButton);
 
 		// creates a tree with games as nodes
-		JTree tree = new JTree();
+		tree = new JTree();
 		tree.setScrollsOnExpand(true);
 		tree.setSelectionRows(new int[] { 1 });
 		tree.setSelectionRow(1);
@@ -164,13 +157,16 @@ class GUI extends JFrame implements WindowListener {
 			private static final long serialVersionUID = 1L;
 
 			{
-				DefaultMutableTreeNode node_1;
-				node_1 = new DefaultMutableTreeNode("Games");
+				DefaultMutableTreeNode favs = new DefaultMutableTreeNode("Favorites");
+				DefaultMutableTreeNode node_1 = new DefaultMutableTreeNode("Games");
 				DefaultMutableTreeNode node_2 = new DefaultMutableTreeNode("Utilities");
 				DefaultMutableTreeNode node_3 = new DefaultMutableTreeNode("Social Media");
 				DefaultMutableTreeNode node_4 = new DefaultMutableTreeNode("Business");
 				DefaultMutableTreeNode node_5 = new DefaultMutableTreeNode("News");
 				DefaultMutableTreeNode node_6 = new DefaultMutableTreeNode("Uncategorized");
+				if (user != null)
+					for (Entry x : user.favorites)
+						favs.add(new EntryMutableTreeNode(x.getName(), x));
 				for (Entry x : Entry.getEntries()) {
 					Category cat = x.getCategory();
 					if (cat == null) {
@@ -196,6 +192,8 @@ class GUI extends JFrame implements WindowListener {
 					}
 
 				}
+				if (!favs.isLeaf())
+					add(favs);
 				if (!node_1.isLeaf())
 					add(node_1);
 				if (!node_2.isLeaf())
@@ -266,80 +264,33 @@ class GUI extends JFrame implements WindowListener {
 		btnNewButton_2.setBounds(214, 69, 131, 23);
 		panel_2.add(btnNewButton_2);
 
-		// Sort Button
-		JButton btnNewButton_3 = new JButton("Sort To Other Folder");
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object root = tree.getModel().getRoot();
-				// array that stores selected node(s)
-				TreePath[] paths = tree.getSelectionPaths();
-				for (TreePath path : paths) {
-					DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) path.getLastPathComponent(); // finds
-																												// the
-																												// selected
-																												// node
-					String selectedNodeStr = path.getLastPathComponent().toString(); // converts node to string
-					if (selectedNode.getParent().toString().equals("Games")) { // If it is in the Games category
-						DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-						model.removeNodeFromParent((MutableTreeNode) selectedNode); // remove node from games
-						Object utilNode = (MutableTreeNode) tree.getModel().getChild(root, 1);
-						model.insertNodeInto(new DefaultMutableTreeNode(selectedNodeStr), (MutableTreeNode) utilNode,
-								0); // insert node into utilities
-					} else if (selectedNode.getParent().toString().equals("Utilities")) {
-						DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-						model.removeNodeFromParent((MutableTreeNode) selectedNode); // remove node from utilties
-						Object gamesNode = (MutableTreeNode) tree.getModel().getChild(root, 0);
-						model.insertNodeInto(new DefaultMutableTreeNode(selectedNodeStr), (MutableTreeNode) gamesNode,
-								0); // insert node into games
-					}
-				}
-			}
-		});
-		btnNewButton_3.setFont(new Font("Bahnschrift", Font.BOLD, 12));
-		btnNewButton_3.setBounds(180, 102, 165, 23);
-		panel_2.add(btnNewButton_3);
-
 		// Filter Games Button
-		JButton btnNewButton_4 = new JButton("Filter Games");
+		JButton btnNewButton_4 = new JButton("Filter Folder Out");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Object root = tree.getModel().getRoot();
-
-				int parentLimit = tree.getModel().getChildCount(root);
-				for (int i = 0; i < parentLimit; i++) {
-					Object node = tree.getModel().getChild(root, i); // gets the child of the parent
-
-					if (node.toString().equals("Games")) {
-						DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-						model.removeNodeFromParent((MutableTreeNode) node);
+				{
+					if (tree.getLastSelectedPathComponent() == null) {
+						JOptionPane.showMessageDialog(getContentPane(), "Please Select a folter to filter out!",
+								"Select Folder!", JOptionPane.ERROR_MESSAGE);
+						return;
 					}
+					DefaultMutableTreeNode root = (DefaultMutableTreeNode) tree.getModel().getRoot();
+					DefaultMutableTreeNode t = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
+					if (!t.isLeaf()) {
+						if(root != t) 
+							((DefaultTreeModel) tree.getModel()).removeNodeFromParent(t);
+						else
+							JOptionPane.showMessageDialog(getContentPane(), "You cannot filter out the root!",
+									"Select Folder!", JOptionPane.ERROR_MESSAGE);
+					} else
+						JOptionPane.showMessageDialog(getContentPane(), "Please Select a folter to filter out!",
+								"Select Folder!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
 		btnNewButton_4.setFont(new Font("Bahnschrift", Font.BOLD, 12));
 		btnNewButton_4.setBounds(10, 102, 165, 23);
 		panel_2.add(btnNewButton_4);
-
-		// Filter Utilities Button
-		JButton btnNewButton_5 = new JButton("Filter Utilities");
-		btnNewButton_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object root = tree.getModel().getRoot();
-
-				int parentLimit = tree.getModel().getChildCount(root);
-				for (int i = 0; i < parentLimit; i++) {
-					Object node = tree.getModel().getChild(root, i); // gets the child of the parent
-
-					if (node.toString().equals("Utilities")) {
-						DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
-						model.removeNodeFromParent((MutableTreeNode) node);
-					}
-				}
-			}
-		});
-		btnNewButton_5.setFont(new Font("Bahnschrift", Font.BOLD, 12));
-		btnNewButton_5.setBounds(10, 136, 165, 23);
-		panel_2.add(btnNewButton_5);
 
 		// Undo Filters Button
 		JButton btnNewButton_6 = new JButton("Undo Filter(s)");
@@ -349,13 +300,16 @@ class GUI extends JFrame implements WindowListener {
 					private static final long serialVersionUID = 1L;
 
 					{
-						DefaultMutableTreeNode node_1;
-						node_1 = new DefaultMutableTreeNode("Games");
+						DefaultMutableTreeNode favs = new DefaultMutableTreeNode("Favorites");
+						DefaultMutableTreeNode node_1 = new DefaultMutableTreeNode("Games");
 						DefaultMutableTreeNode node_2 = new DefaultMutableTreeNode("Utilities");
 						DefaultMutableTreeNode node_3 = new DefaultMutableTreeNode("Social Media");
 						DefaultMutableTreeNode node_4 = new DefaultMutableTreeNode("Business");
 						DefaultMutableTreeNode node_5 = new DefaultMutableTreeNode("News");
 						DefaultMutableTreeNode node_6 = new DefaultMutableTreeNode("Uncategorized");
+						if (user != null)
+							for (Entry x : user.favorites)
+								favs.add(new EntryMutableTreeNode(x.getName(), x));
 						for (Entry x : Entry.getEntries()) {
 							Category cat = x.getCategory();
 							if (cat == null) {
@@ -381,6 +335,8 @@ class GUI extends JFrame implements WindowListener {
 							}
 
 						}
+						if (!favs.isLeaf())
+							add(favs);
 						if (!node_1.isLeaf())
 							add(node_1);
 						if (!node_2.isLeaf())
@@ -398,24 +354,35 @@ class GUI extends JFrame implements WindowListener {
 			}
 		});
 		btnNewButton_6.setFont(new Font("Bahnschrift", Font.BOLD, 12));
-		btnNewButton_6.setBounds(180, 136, 165, 23);
+		btnNewButton_6.setBounds(180, 102, 165, 23);
 		panel_2.add(btnNewButton_6);
-
-		JButton btnNewButton_7 = new JButton("Select Favorite ");
-		btnNewButton_7.setFont(new Font("Bahnschrift", Font.BOLD, 12));
-		btnNewButton_7.setBounds(10, 170, 165, 23);
-		panel_2.add(btnNewButton_7);
 
 		JButton btnNewButton_8 = new JButton("Reviews");
 		btnNewButton_8.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Review.main(null);
+			public void actionPerformed(ActionEvent e) { // will evaluate the node highlighted
+				// array that stores selected node(s)
+				TreePath[] paths = tree.getSelectionPaths();
+				if (paths == null) {
+					JOptionPane.showMessageDialog(contentPane, "Please Select an Entry to find reviews!",
+							"Select Entry!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				for (TreePath path : paths) {
+					DefaultMutableTreeNode x = (DefaultMutableTreeNode) path.getLastPathComponent();
+					if (x instanceof EntryMutableTreeNode) {
+						Review.main(((EntryMutableTreeNode) x).getEntry(), user);
+						break;
+					} else
+						JOptionPane.showMessageDialog(contentPane, "Please Select an Entry to find reviews!",
+								"Select Entry!", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnNewButton_8.setFont(new Font("Bahnschrift", Font.BOLD, 12));
-		btnNewButton_8.setBounds(180, 170, 165, 23);
+		btnNewButton_8.setBounds(10, 170, 165, 23);
 		panel_2.add(btnNewButton_8);
 
+		// Display the rank of the user.
 		String r = "";
 		if (user == null) {
 			r = "GUEST";
@@ -426,8 +393,230 @@ class GUI extends JFrame implements WindowListener {
 		lblRank.setHorizontalAlignment(SwingConstants.LEFT);
 		lblRank.setForeground(new Color(220, 20, 60));
 		lblRank.setFont(new Font("Bahnschrift", Font.BOLD, 14));
-		lblRank.setBounds(10, 286, 165, 31);
+		lblRank.setBounds(10, 286, 150, 31);
 		panel_2.add(lblRank);
+
+		// Display the user's favorite game.
+		String f;
+		if (user == null) {
+			f = "N/A";
+		} else {
+			f = user.favorites.size() + "";
+		}
+		JLabel lblFavorite = new JLabel("Favorites: " + f);
+		lblFavorite.setHorizontalAlignment(SwingConstants.LEFT);
+		lblFavorite.setForeground(new Color(220, 20, 60));
+		lblFavorite.setFont(new Font("Bahnschrift", Font.BOLD, 14));
+		lblFavorite.setBounds(170, 286, 175, 31);
+		panel_2.add(lblFavorite);
+
+		JButton btnNewButton_7 = new JButton("Add Favorite ");
+		btnNewButton_7.setFont(new Font("Bahnschrift", Font.BOLD, 12));
+		btnNewButton_7.setBounds(180, 136, 165, 23);
+		panel_2.add(btnNewButton_7);
+
+		JButton remFav = new JButton("Remove Favorite");
+		remFav.setBounds(10, 136, 165, 23);
+		remFav.setFont(new Font("Bahnschrift", Font.BOLD, 12));
+		remFav.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) { // will evaluate the node highlighted
+				// array that stores selected node(s)
+				if (user == null) {
+					JOptionPane.showMessageDialog(contentPane, "You are a guest, you cannot remove favorites!",
+							"Guest Mode!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if (tree.getLastSelectedPathComponent() == null) {
+					JOptionPane.showMessageDialog(contentPane, "Please Select an Favorite to remove!", "Select Entry!",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				TreePath[] paths = tree.getSelectionPaths();
+				for (TreePath path : paths) {
+					DefaultMutableTreeNode x = (DefaultMutableTreeNode) path.getLastPathComponent();
+					if (x instanceof EntryMutableTreeNode) {
+						Entry ent = ((EntryMutableTreeNode) x).getEntry();
+						if (user.removeFavorite(ent))
+							JOptionPane.showMessageDialog(contentPane, "Removed " + ent.getName() + " from favorites!",
+									"Removal Success", JOptionPane.INFORMATION_MESSAGE);
+						else
+							JOptionPane.showMessageDialog(contentPane, ent.getName() + " is not a favorite!",
+									"Removal Error", JOptionPane.ERROR_MESSAGE);
+						lblFavorite.setText("Favorites: " + user.favorites.size());
+						break;
+					} else
+						JOptionPane.showMessageDialog(contentPane, "Please Select an Entry to remove!",
+								"Select Favorite!", JOptionPane.ERROR_MESSAGE);
+				}
+				tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Applications") {
+					private static final long serialVersionUID = 1L;
+
+					{
+						DefaultMutableTreeNode favs = new DefaultMutableTreeNode("Favorites");
+						DefaultMutableTreeNode node_1 = new DefaultMutableTreeNode("Games");
+						DefaultMutableTreeNode node_2 = new DefaultMutableTreeNode("Utilities");
+						DefaultMutableTreeNode node_3 = new DefaultMutableTreeNode("Social Media");
+						DefaultMutableTreeNode node_4 = new DefaultMutableTreeNode("Business");
+						DefaultMutableTreeNode node_5 = new DefaultMutableTreeNode("News");
+						DefaultMutableTreeNode node_6 = new DefaultMutableTreeNode("Uncategorized");
+						if (user != null)
+							for (Entry x : user.favorites)
+								favs.add(new EntryMutableTreeNode(x.getName(), x));
+						for (Entry x : Entry.getEntries()) {
+							Category cat = x.getCategory();
+							if (cat == null) {
+								node_6.add(new EntryMutableTreeNode(x.getName(), x));
+								continue;
+							}
+							switch (cat) {
+							case GAME:
+								node_1.add(new EntryMutableTreeNode(x.getName(), x));
+								break;
+							case UTILITY:
+								node_2.add(new EntryMutableTreeNode(x.getName(), x));
+								break;
+							case SOCIAL:
+								node_3.add(new EntryMutableTreeNode(x.getName(), x));
+								break;
+							case BUSINESS:
+								node_4.add(new EntryMutableTreeNode(x.getName(), x));
+								break;
+							case NEWS:
+								node_5.add(new EntryMutableTreeNode(x.getName(), x));
+								break;
+							}
+
+						}
+						if (!favs.isLeaf())
+							add(favs);
+						if (!node_1.isLeaf())
+							add(node_1);
+						if (!node_2.isLeaf())
+							add(node_2);
+						if (!node_3.isLeaf())
+							add(node_3);
+						if (!node_4.isLeaf())
+							add(node_4);
+						if (!node_5.isLeaf())
+							add(node_5);
+						if (!node_6.isLeaf())
+							add(node_6);
+					}
+				}));
+			}
+		});
+		panel_2.add(remFav);
+
+		JButton btnNewButton_9 = new JButton("Request");
+		btnNewButton_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RequestPage req = new RequestPage(user);
+				req.setVisible(true);
+			}
+		});
+		btnNewButton_9.setFont(new Font("Bahnschrift", Font.BOLD, 12));
+		btnNewButton_9.setBounds(180, 170, 165, 23);
+		panel_2.add(btnNewButton_9);
+
+		JButton adminMode = new JButton("Admin Mode");
+		adminMode.setBounds(10, 204, 165, 23);
+		adminMode.setFont(new Font("Bahnschrift", Font.BOLD, 12));
+		adminMode.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				(new AdminPanel(user, instance)).setVisible(true);
+			}
+		});
+		if (User.isAdmin(user))
+			panel_2.add(adminMode);
+
+		// Have the "Select Favorite" button display the favorite game.
+		btnNewButton_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) { // will evaluate the node highlighted
+				// array that stores selected node(s)
+				if (user == null) {
+					JOptionPane.showMessageDialog(contentPane, "You are a guest, you cannot save favorites!",
+							"Guest Mode!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if (tree.getLastSelectedPathComponent() == null) {
+					JOptionPane.showMessageDialog(contentPane, "Please Select an Entry to favorite!", "Select Entry!",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				TreePath[] paths = tree.getSelectionPaths();
+				for (TreePath path : paths) {
+					DefaultMutableTreeNode x = (DefaultMutableTreeNode) path.getLastPathComponent();
+					if (x instanceof EntryMutableTreeNode) {
+						Entry ent = ((EntryMutableTreeNode) x).getEntry();
+						if (user.addFavorite(ent))
+							JOptionPane.showMessageDialog(contentPane, "Added " + ent.getName() + " to favorites!",
+									"Add Success", JOptionPane.INFORMATION_MESSAGE);
+						else
+							JOptionPane.showMessageDialog(contentPane, ent.getName() + " is already a favorite!",
+									"Add Error", JOptionPane.ERROR_MESSAGE);
+						lblFavorite.setText("Favorites: " + user.favorites.size());
+						break;
+					} else
+						JOptionPane.showMessageDialog(contentPane, "Please Select an Entry to save!", "Select Entry!",
+								JOptionPane.ERROR_MESSAGE);
+				}
+				tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Applications") {
+					private static final long serialVersionUID = 1L;
+
+					{
+						DefaultMutableTreeNode favs = new DefaultMutableTreeNode("Favorites");
+						DefaultMutableTreeNode node_1 = new DefaultMutableTreeNode("Games");
+						DefaultMutableTreeNode node_2 = new DefaultMutableTreeNode("Utilities");
+						DefaultMutableTreeNode node_3 = new DefaultMutableTreeNode("Social Media");
+						DefaultMutableTreeNode node_4 = new DefaultMutableTreeNode("Business");
+						DefaultMutableTreeNode node_5 = new DefaultMutableTreeNode("News");
+						DefaultMutableTreeNode node_6 = new DefaultMutableTreeNode("Uncategorized");
+						if (user != null)
+							for (Entry x : user.favorites)
+								favs.add(new EntryMutableTreeNode(x.getName(), x));
+						for (Entry x : Entry.getEntries()) {
+							Category cat = x.getCategory();
+							if (cat == null) {
+								node_6.add(new EntryMutableTreeNode(x.getName(), x));
+								continue;
+							}
+							switch (cat) {
+							case GAME:
+								node_1.add(new EntryMutableTreeNode(x.getName(), x));
+								break;
+							case UTILITY:
+								node_2.add(new EntryMutableTreeNode(x.getName(), x));
+								break;
+							case SOCIAL:
+								node_3.add(new EntryMutableTreeNode(x.getName(), x));
+								break;
+							case BUSINESS:
+								node_4.add(new EntryMutableTreeNode(x.getName(), x));
+								break;
+							case NEWS:
+								node_5.add(new EntryMutableTreeNode(x.getName(), x));
+								break;
+							}
+
+						}
+						if (!favs.isLeaf())
+							add(favs);
+						if (!node_1.isLeaf())
+							add(node_1);
+						if (!node_2.isLeaf())
+							add(node_2);
+						if (!node_3.isLeaf())
+							add(node_3);
+						if (!node_4.isLeaf())
+							add(node_4);
+						if (!node_5.isLeaf())
+							add(node_5);
+						if (!node_6.isLeaf())
+							add(node_6);
+					}
+				}));
+			}
+		});
 
 		JLabel lblApplicationDirectory = new JLabel("Application Directory");
 		lblApplicationDirectory.setForeground(new Color(220, 20, 60));
@@ -439,7 +628,7 @@ class GUI extends JFrame implements WindowListener {
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		panel_3.setBorder(new LineBorder(new Color(105, 105, 105), 2));
 		panel_3.setLayout(null);
-		panel_3.setBackground(new Color(230, 230, 250));
+		panel_3.setBackground(Color.WHITE);
 		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
 		gbc_panel_3.fill = GridBagConstraints.BOTH;
 		gbc_panel_3.gridx = 1;
@@ -490,6 +679,65 @@ class GUI extends JFrame implements WindowListener {
 			}
 		});
 		addWindowListener(this);
+		instance = this;
+	}
+
+	public void refreshEntries() {
+		tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Applications") {
+			private static final long serialVersionUID = 1L;
+
+			{
+				DefaultMutableTreeNode favs = new DefaultMutableTreeNode("Favorites");
+				DefaultMutableTreeNode node_1 = new DefaultMutableTreeNode("Games");
+				DefaultMutableTreeNode node_2 = new DefaultMutableTreeNode("Utilities");
+				DefaultMutableTreeNode node_3 = new DefaultMutableTreeNode("Social Media");
+				DefaultMutableTreeNode node_4 = new DefaultMutableTreeNode("Business");
+				DefaultMutableTreeNode node_5 = new DefaultMutableTreeNode("News");
+				DefaultMutableTreeNode node_6 = new DefaultMutableTreeNode("Uncategorized");
+				if (user != null)
+					for (Entry x : user.favorites)
+						favs.add(new EntryMutableTreeNode(x.getName(), x));
+				for (Entry x : Entry.getEntries()) {
+					Category cat = x.getCategory();
+					if (cat == null) {
+						node_6.add(new EntryMutableTreeNode(x.getName(), x));
+						continue;
+					}
+					switch (cat) {
+					case GAME:
+						node_1.add(new EntryMutableTreeNode(x.getName(), x));
+						break;
+					case UTILITY:
+						node_2.add(new EntryMutableTreeNode(x.getName(), x));
+						break;
+					case SOCIAL:
+						node_3.add(new EntryMutableTreeNode(x.getName(), x));
+						break;
+					case BUSINESS:
+						node_4.add(new EntryMutableTreeNode(x.getName(), x));
+						break;
+					case NEWS:
+						node_5.add(new EntryMutableTreeNode(x.getName(), x));
+						break;
+					}
+
+				}
+				if (!favs.isLeaf())
+					add(favs);
+				if (!node_1.isLeaf())
+					add(node_1);
+				if (!node_2.isLeaf())
+					add(node_2);
+				if (!node_3.isLeaf())
+					add(node_3);
+				if (!node_4.isLeaf())
+					add(node_4);
+				if (!node_5.isLeaf())
+					add(node_5);
+				if (!node_6.isLeaf())
+					add(node_6);
+			}
+		}));
 	}
 
 	// returns the treepath for a node
@@ -513,9 +761,6 @@ class GUI extends JFrame implements WindowListener {
 	public void windowOpened(WindowEvent e) {
 	}
 
-	/**
-	 * Makes sure entries and users are stored before application closes.
-	 */
 	@Override
 	public void windowClosing(WindowEvent e) {
 		User.storeToFile();

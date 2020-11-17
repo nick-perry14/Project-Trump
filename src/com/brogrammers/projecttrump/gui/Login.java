@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -96,24 +97,19 @@ public class Login extends JFrame {
 		passwordField.setBounds(25, 151, 253, 35);
 		panel.add(passwordField);
 
-		JTextPane txtpnTest = new JTextPane();
-		txtpnTest.setBackground(Color.GRAY);
-		txtpnTest.setEditable(false);
-		txtpnTest.setFont(new Font("Bahnschrift", Font.BOLD, 12));
-		txtpnTest.setText("");
-		txtpnTest.setBounds(25, 289, 254, 36);
-		panel.add(txtpnTest);
-
 		JButton btnNewButton = new JButton("Login");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				@SuppressWarnings("deprecation")
-				User user = User.login(textField.getText(), passwordField.getText());
+				StringBuffer pass = new StringBuffer();
+				pass.append(passwordField.getPassword());
+				User user = User.login(textField.getText(), pass.toString());
 				if (user != null) {
 					GUI.main(user);
 					frame.dispose();
 				} else {
-					txtpnTest.setText("Username or password incorrect!");
+					JOptionPane.showMessageDialog(getContentPane(), "Username or password incorrect!",
+							"Incorrect Login!", JOptionPane.ERROR_MESSAGE);
+					passwordField.setText("");
 				}
 
 			}
@@ -135,26 +131,31 @@ public class Login extends JFrame {
 
 		JButton btnNewButton_2 = new JButton("Create Account");
 		btnNewButton_2.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					if (textField.getText().equals("")) {
-						txtpnTest.setText("Username Required!");
+						JOptionPane.showMessageDialog(getContentPane(), "Username Required!", "Username Required!",
+								JOptionPane.ERROR_MESSAGE);
+						passwordField.setText("");
 
-					} else if (passwordField.getText().equals("")) {
-						txtpnTest.setText("Password Required!");
+					} else if (passwordField.getPassword().length == 0) {
+						JOptionPane.showMessageDialog(getContentPane(), "Password Required!", "Password Required!",
+								JOptionPane.ERROR_MESSAGE);
 					} else {
-						User a = new User(textField.getText(), passwordField.getText());
-						txtpnTest.setText("User " + a.getUsername() + " created");
+						StringBuffer pass = new StringBuffer();
+						pass.append(passwordField.getPassword());
+						User a = new User(textField.getText(), pass.toString());
+						JOptionPane.showMessageDialog(getContentPane(), "Account " + textField.getText() + " Created!",
+								"Account Created!", JOptionPane.INFORMATION_MESSAGE);
 						User.storeToFile();
 						GUI.main(a);
 						dispose();
 					}
 
 				} catch (UserAlreadyExistsException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					txtpnTest.setText("User already exists!");
+					JOptionPane.showMessageDialog(getContentPane(), "User already exists, select new username!",
+							"Account Creation Failed!", JOptionPane.ERROR_MESSAGE);
+					passwordField.setText("");
 				}
 			}
 		});

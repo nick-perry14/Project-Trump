@@ -69,6 +69,20 @@ public class User implements Serializable {
 	}
 
 	/**
+	 * Method to remove a user
+	 * 
+	 * @param adminUser Admin executing the removal
+	 * @param removed   User to be removed
+	 * @return If the removal was successful
+	 */
+	public static boolean removeUser(User adminUser, User removed) {
+		if (isAdmin(adminUser)) {
+			return users.remove(removed.getUsername()) != null;
+		}
+		return false;
+	}
+
+	/**
 	 * The initial Loading method that gets the users on program start. Uses
 	 * Deserialization
 	 * 
@@ -101,7 +115,7 @@ public class User implements Serializable {
 	 * @return Whether or not the user is a moderator
 	 */
 	public static boolean isModerator(User user) {
-		return user.rank == Ranks.MODERATOR || user.rank == Ranks.ADMIN;
+		return user != null && (user.rank == Ranks.MODERATOR || user.rank == Ranks.ADMIN);
 	}
 
 	/**
@@ -111,7 +125,7 @@ public class User implements Serializable {
 	 * @return Whether or not the user is an admin
 	 */
 	public static boolean isAdmin(User user) {
-		return user.rank == Ranks.ADMIN;
+		return user != null && user.rank == Ranks.ADMIN;
 	}
 
 	/**
@@ -154,18 +168,26 @@ public class User implements Serializable {
 	 * Adds a favorite game or app
 	 * 
 	 * @param entry Entry object of game / app to add
+	 * 
+	 * @return Whether or not the favorite was added
 	 */
-	public void addFavorite(Entry entry) {
-		favorites.add(entry);
+	public boolean addFavorite(Entry entry) {
+		if (!favorites.contains(entry)) {
+			favorites.add(entry);
+			return true;
+		}
+		return false;
 	}
 
 	/**
 	 * Removes a favorite game or app
 	 * 
 	 * @param entry Entry object of game / app to remove
+	 * 
+	 * @return Whether or not the favorite was removed
 	 */
-	public void removeFavorite(Entry entry) {
-		favorites.remove(entry);
+	public boolean removeFavorite(Entry entry) {
+		return favorites.remove(entry);
 	}
 
 	/**
@@ -202,20 +224,35 @@ public class User implements Serializable {
 	 * @param adminUser
 	 * @param adminPass
 	 * @param promotedUsername
-	 * @return Status code. -1: failed login 0: success 1: no permission (not an
-	 *         admin user) 2: Promoted user does not exist
+	 * @return Status code. 0: success 1: no permission (not an admin user) 2:
+	 *         Promoted user does not exist
 	 */
-	public static int changeRank(String adminUser, String adminPass, String promotedUsername, Ranks rank) {
-		User admin = login(adminUser, adminPass);
-		if (admin == null)
-			return -1;
-		if (!isAdmin(admin))
+	public static int changeRank(User adminUser, User promotedUser, Ranks rank) {
+		if (!isAdmin(adminUser))
 			return 1;
-		User target = users.get(promotedUsername);
-		if (target == null)
+		if (promotedUser == null)
 			return 2;
-		target.rank = rank;
+		promotedUser.rank = rank;
 		return 0;
+	}
+
+	/**
+	 * Returns all the users that are registered
+	 * 
+	 * @param user Admin user requesting list
+	 * @return List of users, or null if user requesting is not admin.
+	 */
+	public static HashMap<String, User> getAllUsers(User user) {
+		if (isAdmin(user)) {
+			return users;
+		}
+		return null;
+	}
+
+	public static int getNumUsers(User user) {
+		if (isAdmin(user))
+			return users.size();
+		return -1;
 	}
 
 	/**
@@ -231,6 +268,10 @@ public class User implements Serializable {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
+	}
+
+	public String toString() {
+		return username;
 	}
 
 	/**
