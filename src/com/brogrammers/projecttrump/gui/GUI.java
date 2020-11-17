@@ -4,7 +4,6 @@ package com.brogrammers.projecttrump.gui;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -29,7 +28,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
@@ -47,10 +45,10 @@ import com.brogrammers.projecttrump.user.User;
  *
  */
 public class GUI extends JFrame implements WindowListener {
+	private static final long serialVersionUID = 1L;
 	private GUI instance;
 	private JPanel contentPane;
 	private User user;
-	private JTextField textField;
 	private JTree tree;
 
 	/**

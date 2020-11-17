@@ -19,7 +19,7 @@ import com.brogrammers.projecttrump.user.User;
  *
  */
 public class ReqsInfo extends JFrame {
-
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**

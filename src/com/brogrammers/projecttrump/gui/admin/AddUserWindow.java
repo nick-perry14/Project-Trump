@@ -26,7 +26,7 @@ import com.brogrammers.projecttrump.user.UserAlreadyExistsException;
  *
  */
 public class AddUserWindow extends JFrame {
-
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField nameField;
 	private JLabel password;
@@ -77,7 +77,7 @@ public class AddUserWindow extends JFrame {
 					userName.setForeground(Color.RED);
 				} else
 					userName.setForeground(Color.BLACK);
-				if (passwordField.getText().equals("")) {
+				if (passwordField.getPassword().length == 0) {
 					req = false;
 					password.setForeground(Color.RED);
 				} else

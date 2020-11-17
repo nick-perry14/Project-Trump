@@ -3,7 +3,6 @@ package com.brogrammers.projecttrump.games;
 
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -25,7 +24,7 @@ import javax.swing.JTextPane;
  *
  */
 public class TicTacToeGame extends JFrame implements Serializable {
-
+	private static final long serialVersionUID = 1L;
 	public static JPanel contentPane;
 	public static String[] board;
 	public static String turn;
@@ -345,6 +344,7 @@ public class TicTacToeGame extends JFrame implements Serializable {
 
 		btnNewButton = new JButton("Dark Mode");
 		btnNewButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				if (contentPane.getBackground() == Color.black) {
 					button.setBackground(Color.white);

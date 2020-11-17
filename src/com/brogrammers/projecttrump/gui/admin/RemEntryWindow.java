@@ -3,20 +3,16 @@ package com.brogrammers.projecttrump.gui.admin;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -24,12 +20,7 @@ import com.brogrammers.projecttrump.gui.GUI;
 import com.brogrammers.projecttrump.gui.entries.Category;
 import com.brogrammers.projecttrump.gui.entries.Entry;
 import com.brogrammers.projecttrump.gui.entries.EntryMutableTreeNode;
-import com.brogrammers.projecttrump.user.Ranks;
 import com.brogrammers.projecttrump.user.User;
-import javax.swing.JTextField;
-import javax.swing.JTree;
-
-import java.awt.Font;
 
 /**
  * Admin Panel Remove Entry Window

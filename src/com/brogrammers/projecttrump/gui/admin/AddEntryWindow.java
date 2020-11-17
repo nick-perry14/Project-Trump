@@ -28,7 +28,7 @@ import com.brogrammers.projecttrump.user.User;
  *
  */
 public class AddEntryWindow extends JFrame {
-
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField nameField;
 	private JTextField devField;
