@@ -155,8 +155,9 @@ public class GUI extends JFrame implements WindowListener {
 				DefaultMutableTreeNode node_4 = new DefaultMutableTreeNode("Business");
 				DefaultMutableTreeNode node_5 = new DefaultMutableTreeNode("News");
 				DefaultMutableTreeNode node_6 = new DefaultMutableTreeNode("Uncategorized");
-				for (Entry x : user.favorites)
-					favs.add(new EntryMutableTreeNode(x.getName(), x));
+				if (user != null)
+					for (Entry x : user.favorites)
+						favs.add(new EntryMutableTreeNode(x.getName(), x));
 				for (Entry x : Entry.getEntries()) {
 					Category cat = x.getCategory();
 					if (cat == null) {
