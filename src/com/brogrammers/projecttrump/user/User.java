@@ -54,6 +54,8 @@ public class User implements Serializable {
 	 * 
 	 * @param username Username of the new user
 	 * @param password Password of the new user
+	 * 
+	 * @throws UserAlreadyExistsException Thrown if the user already exists
 	 */
 	public User(String username, String password) throws UserAlreadyExistsException {
 		if (users.containsKey(username))
@@ -221,9 +223,9 @@ public class User implements Serializable {
 	/**
 	 * Gives the ability to change the rank of a user.
 	 * 
-	 * @param adminUser
-	 * @param adminPass
-	 * @param promotedUsername
+	 * @param adminUser        User of the admin that is promoting
+	 * @param promotedUser User being promoted
+	 * @param rank             New rank of promoted user
 	 * @return Status code. 0: success 1: no permission (not an admin user) 2:
 	 *         Promoted user does not exist
 	 */

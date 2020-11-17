@@ -1,3 +1,4 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.gui;
 
 import java.awt.Button;
@@ -38,6 +39,11 @@ import com.brogrammers.projecttrump.gui.entries.Entry;
 import com.brogrammers.projecttrump.gui.entries.EntryMutableTreeNode;
 import com.brogrammers.projecttrump.user.User;
 
+/**
+ * Main GUI
+ * @author Luke Brown (Main Code), Nick Perry (Debugging and Backend Functionality)
+ *
+ */
 public class GUI extends JFrame implements WindowListener {
 	private GUI instance;
 	private JPanel contentPane;
@@ -46,24 +52,8 @@ public class GUI extends JFrame implements WindowListener {
 	private JTree tree;
 
 	/**
-	 * Launch the application. String username is the name of the user.
-	 */
-	public static void main(User user) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUI frame = new GUI(user); // RENAME TO ResizableGUI (IM TALKING TO YOU, LUKE)
-												// <---------------------------
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
+	 * Creates the GUI
+	 * @param user Logged in user object
 	 */
 	public GUI(User user) {
 		setTitle("Project Trump");
@@ -277,7 +267,7 @@ public class GUI extends JFrame implements WindowListener {
 					DefaultMutableTreeNode root = (DefaultMutableTreeNode) tree.getModel().getRoot();
 					DefaultMutableTreeNode t = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 					if (!t.isLeaf()) {
-						if(root != t) 
+						if (root != t)
 							((DefaultTreeModel) tree.getModel()).removeNodeFromParent(t);
 						else
 							JOptionPane.showMessageDialog(getContentPane(), "You cannot filter out the root!",
@@ -370,7 +360,7 @@ public class GUI extends JFrame implements WindowListener {
 				for (TreePath path : paths) {
 					DefaultMutableTreeNode x = (DefaultMutableTreeNode) path.getLastPathComponent();
 					if (x instanceof EntryMutableTreeNode) {
-						Review.main(((EntryMutableTreeNode) x).getEntry(), user);
+						(new Review(((EntryMutableTreeNode) x).getEntry(), user)).setVisible(true);;
 						break;
 					} else
 						JOptionPane.showMessageDialog(contentPane, "Please Select an Entry to find reviews!",
@@ -510,8 +500,12 @@ public class GUI extends JFrame implements WindowListener {
 		JButton btnNewButton_9 = new JButton("Request");
 		btnNewButton_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				RequestPage req = new RequestPage(user);
-				req.setVisible(true);
+				if (user != null) {
+					RequestPage req = new RequestPage(user);
+					req.setVisible(true);
+				} else
+					JOptionPane.showMessageDialog(getContentPane(), "Please Log In to request a new entry!",
+							"Guest Mode!", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		btnNewButton_9.setFont(new Font("Bahnschrift", Font.BOLD, 12));

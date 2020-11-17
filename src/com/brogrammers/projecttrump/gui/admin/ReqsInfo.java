@@ -1,3 +1,4 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.gui.admin;
 
 import java.awt.Font;
@@ -21,6 +22,11 @@ public class ReqsInfo extends JFrame {
 
 	private JPanel contentPane;
 
+	/**
+	 * Create Window
+	 * @param entry Request Entry
+	 * @param u User that submitted request.
+	 */
 	public ReqsInfo(WebEntry entry, User u) {
 		setResizable(false);
 		setTitle("Request Info");
@@ -70,7 +76,7 @@ public class ReqsInfo extends JFrame {
 		lblCategory.setFont(new Font("Bahnschrift", Font.BOLD, 12));
 		lblCategory.setBounds(10, 76, 263, 14);
 		contentPane.add(lblCategory);
-		
+
 		JLabel lblUser = new JLabel("Requesting User: " + u.getUsername());
 		lblUser.setFont(new Font("Bahnschrift", Font.BOLD, 12));
 		lblUser.setBounds(10, 101, 263, 14);

@@ -1,3 +1,4 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.gui.admin;
 
 import java.awt.Color;
@@ -18,6 +19,12 @@ import com.brogrammers.projecttrump.user.Ranks;
 import com.brogrammers.projecttrump.user.User;
 import com.brogrammers.projecttrump.user.UserAlreadyExistsException;
 
+/**
+ * Window in admin panel that allows an admin to add a user
+ * 
+ * @author Nick Perry
+ *
+ */
 public class AddUserWindow extends JFrame {
 
 	private JPanel contentPane;

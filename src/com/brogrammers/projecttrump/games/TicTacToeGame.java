@@ -1,3 +1,4 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.games;
 
 import java.awt.Button;
@@ -18,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 /**
- * 
+ * Simple Tic Tac Toe Game
  * 
  * @author Xuqi Chen
  *
@@ -44,22 +45,6 @@ public class TicTacToeGame extends JFrame implements Serializable {
 	public static boolean b;
 	public static int numInput;
 	public static String winner = null;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TicTacToeGame frame = new TicTacToeGame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.

@@ -1,3 +1,4 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.gui.admin;
 
 import java.awt.Dimension;
@@ -19,6 +20,11 @@ import com.brogrammers.projecttrump.gui.entries.Entry;
 import com.brogrammers.projecttrump.gui.entries.WebEntry;
 import com.brogrammers.projecttrump.user.User;
 
+/**
+ * Admin Panel Request Moderation Window
+ * @author Nick Perry
+ *
+ */
 public class ModerateReqsWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JList<WebEntry> list;
@@ -86,7 +92,8 @@ public class ModerateReqsWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				WebEntry sel = list.getSelectedValue();
 				if (sel != null)
-					(new ReqsInfo(list.getSelectedValue(), Entry.getRequests(admin).get(list.getSelectedValue()))).setVisible(true);
+					(new ReqsInfo(list.getSelectedValue(), Entry.getRequests(admin).get(list.getSelectedValue())))
+							.setVisible(true);
 				else
 					JOptionPane.showMessageDialog(getContentPane(), "Select A Request!", "No Request Selected!",
 							JOptionPane.ERROR_MESSAGE);

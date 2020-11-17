@@ -1,3 +1,4 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.gui.admin;
 
 import java.awt.Dimension;
@@ -19,12 +20,17 @@ import com.brogrammers.projecttrump.user.User;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
 
+/**
+ * Admin Panel Rank Editing window
+ * @author Nick Perry
+ *
+ */
 public class EditUserRankWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	JComboBox<Ranks> rankSelector;
 
 	public EditUserRankWindow(User admin) {
-		if(!User.isAdmin(admin))
+		if (!User.isAdmin(admin))
 			dispose();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Rank Change");

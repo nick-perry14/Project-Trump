@@ -1,3 +1,4 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.gui.admin;
 
 import java.awt.BorderLayout;

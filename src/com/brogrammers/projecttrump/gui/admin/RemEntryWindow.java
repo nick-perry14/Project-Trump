@@ -1,3 +1,4 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.gui.admin;
 
 import java.awt.Color;
@@ -30,9 +31,21 @@ import javax.swing.JTree;
 
 import java.awt.Font;
 
+/**
+ * Admin Panel Remove Entry Window
+ * 
+ * @author Nick Perry
+ *
+ */
 public class RemEntryWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Create Frame
+	 * 
+	 * @param admin Admin User
+	 * @param gui   Gui of Admin User
+	 */
 	public RemEntryWindow(User admin, GUI gui) {
 		if (!User.isAdmin(admin))
 			dispose();

@@ -1,3 +1,4 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.gui;
 
 import java.awt.Color;
@@ -42,7 +43,9 @@ public class Login extends JFrame {
 	private static Login frame = new Login();
 
 	/**
-	 * Launch the application.
+	 * Launch the login screen
+	 * 
+	 * @param args - No runtime args needed.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -104,7 +107,7 @@ public class Login extends JFrame {
 				pass.append(passwordField.getPassword());
 				User user = User.login(textField.getText(), pass.toString());
 				if (user != null) {
-					GUI.main(user);
+					(new GUI(user)).setVisible(true);
 					frame.dispose();
 				} else {
 					JOptionPane.showMessageDialog(getContentPane(), "Username or password incorrect!",
@@ -121,7 +124,7 @@ public class Login extends JFrame {
 		JButton btnNewButton_1 = new JButton("Guest Mode\r\n");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				GUI.main(null);
+				(new GUI(null)).setVisible(true);
 				dispose();
 			}
 		});
@@ -148,7 +151,7 @@ public class Login extends JFrame {
 						JOptionPane.showMessageDialog(getContentPane(), "Account " + textField.getText() + " Created!",
 								"Account Created!", JOptionPane.INFORMATION_MESSAGE);
 						User.storeToFile();
-						GUI.main(a);
+						(new GUI(a)).setVisible(true);
 						dispose();
 					}
 

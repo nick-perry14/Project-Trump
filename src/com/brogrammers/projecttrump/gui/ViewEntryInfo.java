@@ -1,5 +1,6 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.gui;
-import java.awt.EventQueue;
+
 import java.awt.Font;
 
 import javax.swing.JFrame;
@@ -9,28 +10,19 @@ import javax.swing.border.EmptyBorder;
 
 import com.brogrammers.projecttrump.gui.entries.Entry;
 
+/**
+ * Entry information window
+ * 
+ * @author Luke Brown
+ *
+ */
 public class ViewEntryInfo extends JFrame {
-
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(Entry entry) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ViewEntryInfo frame = new ViewEntryInfo(entry);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
+	 * Create the frame
+	 * @param entry Entry for info to be viewed
 	 */
 	public ViewEntryInfo(Entry entry) {
 		setResizable(false);
@@ -41,18 +33,18 @@ public class ViewEntryInfo extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblName = new JLabel("Name: " + entry.getName());
 		lblName.setFont(new Font("Bahnschrift", Font.BOLD, 12));
 		lblName.setBounds(10, 0, 263, 14);
 		contentPane.add(lblName);
-		
+
 		JLabel lblDeveloper = new JLabel("Developer: " + entry.getDeveloper());
 		lblDeveloper.setFont(new Font("Bahnschrift", Font.BOLD, 12));
 		lblDeveloper.setBounds(10, 26, 263, 14);
 		contentPane.add(lblDeveloper);
 		String rating = "Rating: ";
-		switch(entry.getRating()) {
+		switch (entry.getRating()) {
 		case 1:
 			rating = rating + "E";
 			break;
@@ -75,11 +67,12 @@ public class ViewEntryInfo extends JFrame {
 		lblRating.setFont(new Font("Bahnschrift", Font.BOLD, 12));
 		lblRating.setBounds(10, 51, 263, 14);
 		contentPane.add(lblRating);
-		
-		JLabel lblCategory = new JLabel("Category: " + ((entry.getCategory() != null)? entry.getCategory() : "Uncategorized"));
+
+		JLabel lblCategory = new JLabel(
+				"Category: " + ((entry.getCategory() != null) ? entry.getCategory() : "Uncategorized"));
 		lblCategory.setFont(new Font("Bahnschrift", Font.BOLD, 12));
 		lblCategory.setBounds(10, 76, 194, 14);
 		contentPane.add(lblCategory);
-		
+
 	}
 }

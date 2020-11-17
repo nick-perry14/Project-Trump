@@ -1,3 +1,4 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.gui.admin;
 
 import java.awt.Dimension;
@@ -21,10 +22,21 @@ import com.brogrammers.projecttrump.user.User;
 import javax.swing.JTextField;
 import java.awt.Font;
 
+/**
+ * Admin Panel Remove User Window
+ * 
+ * @author Nick Perry
+ *
+ */
 public class RemUserWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField rankField;
 
+	/**
+	 * Creates Remove User Window
+	 * 
+	 * @param admin Admin User
+	 */
 	public RemUserWindow(User admin) {
 		if (!User.isAdmin(admin))
 			dispose();

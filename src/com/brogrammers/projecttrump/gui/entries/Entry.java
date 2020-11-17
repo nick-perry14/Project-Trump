@@ -1,3 +1,4 @@
+// Copyright Brogrammers 2020
 package com.brogrammers.projecttrump.gui.entries;
 
 import java.io.File;
@@ -45,9 +46,12 @@ public abstract class Entry implements Serializable {
 	 */
 	protected static ArrayList<Entry> entries = readFromFile();
 	/**
-	 * 
+	 * Hashmap of all requests and users
 	 */
 	protected static HashMap<WebEntry, User> requests = readReqFromFile();
+	/**
+	 * Array list of each entry's comments
+	 */
 	private ArrayList<Comment> comments = new ArrayList<>();
 
 	/**
@@ -77,7 +81,7 @@ public abstract class Entry implements Serializable {
 	/**
 	 * Changes the name of the developer
 	 * 
-	 * @param New Name
+	 * @param name New Name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -95,7 +99,7 @@ public abstract class Entry implements Serializable {
 	/**
 	 * Changes the developer of the entry
 	 * 
-	 * @param New developer
+	 * @param developer New developer
 	 */
 	public void setDeveloper(String developer) {
 		this.developer = developer;
@@ -142,7 +146,7 @@ public abstract class Entry implements Serializable {
 	 * 
 	 * @param user    Commenter
 	 * @param content Comment content
-	 * @return
+	 * @return wether the comment was successful
 	 */
 	public boolean addComment(User user, String content) {
 		if (user != null) {
@@ -253,8 +257,8 @@ public abstract class Entry implements Serializable {
 	/**
 	 * Rejects the specified request
 	 * 
-	 * @param ID   entry of request
-	 * @param user Requester
+	 * @param entry entry of request
+	 * @param user  Requester
 	 * @return Whether or not the rejection was successful
 	 */
 	public static boolean rejectRequest(WebEntry entry, User user) {
@@ -268,8 +272,8 @@ public abstract class Entry implements Serializable {
 	/**
 	 * Removes an entry from the list
 	 * 
-	 * @param user Admin user removing the entry
-	 * @param ID   ID of Entry
+	 * @param user  Admin user removing the entry
+	 * @param entry ID of Entry
 	 * @return Status Code: -1 = No permission, 0 = Success, 1 = Entry does not
 	 *         exist, 2 = Entry Protected
 	 */
