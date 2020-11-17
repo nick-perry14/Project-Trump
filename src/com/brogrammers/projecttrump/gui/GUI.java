@@ -41,7 +41,9 @@ import com.brogrammers.projecttrump.user.User;
 
 /**
  * Main GUI
- * @author Luke Brown (Main Code), Nick Perry (Debugging and Backend Functionality)
+ * 
+ * @author Luke Brown (Main Code), Nick Perry (Debugging and Backend
+ *         Functionality)
  *
  */
 public class GUI extends JFrame implements WindowListener {
@@ -53,6 +55,7 @@ public class GUI extends JFrame implements WindowListener {
 
 	/**
 	 * Creates the GUI
+	 * 
 	 * @param user Logged in user object
 	 */
 	public GUI(User user) {
@@ -154,9 +157,8 @@ public class GUI extends JFrame implements WindowListener {
 				DefaultMutableTreeNode node_4 = new DefaultMutableTreeNode("Business");
 				DefaultMutableTreeNode node_5 = new DefaultMutableTreeNode("News");
 				DefaultMutableTreeNode node_6 = new DefaultMutableTreeNode("Uncategorized");
-				if (user != null)
-					for (Entry x : user.favorites)
-						favs.add(new EntryMutableTreeNode(x.getName(), x));
+				for (Entry x : user.favorites)
+					favs.add(new EntryMutableTreeNode(x.getName(), x));
 				for (Entry x : Entry.getEntries()) {
 					Category cat = x.getCategory();
 					if (cat == null) {
@@ -360,7 +362,21 @@ public class GUI extends JFrame implements WindowListener {
 				for (TreePath path : paths) {
 					DefaultMutableTreeNode x = (DefaultMutableTreeNode) path.getLastPathComponent();
 					if (x instanceof EntryMutableTreeNode) {
-						(new Review(((EntryMutableTreeNode) x).getEntry(), user)).setVisible(true);;
+						if (x.getParent().toString() == "Favorites") {
+							DefaultMutableTreeNode root = (DefaultMutableTreeNode) tree.getModel().getRoot();
+							for (int i = 0; i < root.getChildCount(); i++) {
+								if (root.getChildAt(i).toString().equals("Favorites"))
+									continue;
+								for (int j = 0; i < root.getChildAt(i).getChildCount(); i++) {
+									if (root.getChildAt(i).getChildAt(j).toString().equals(x.toString())) {
+										(new Review(
+												((EntryMutableTreeNode) root.getChildAt(i).getChildAt(j)).getEntry(),
+												user)).setVisible(true);
+									}
+								}
+							}
+						}
+						(new Review(((EntryMutableTreeNode) x).getEntry(), user)).setVisible(true);
 						break;
 					} else
 						JOptionPane.showMessageDialog(contentPane, "Please Select an Entry to find reviews!",

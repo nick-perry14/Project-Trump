@@ -63,20 +63,37 @@ public class Review extends JFrame {
 		JButton btnWriteNewReview = new JButton("Write New Review");
 		btnWriteNewReview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				entry.addComment(user, textField.getText());
-				list.add(textField.getText() + "  -" + user.getUsername());
+				if (user != null) {
+					entry.addComment(user, textField.getText());
+					list.add(textField.getText() + "  -" + user.getUsername());
+					textField.setText("");
+				} else
+					JOptionPane.showMessageDialog(contentPane, "You must be logged in to write a review!",
+							"Guest Mode!", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		btnWriteNewReview.setFont(new Font("Bahnschrift", Font.BOLD, 12));
 		btnWriteNewReview.setBounds(10, 224, 150, 26);
 		contentPane.add(btnWriteNewReview);
 
-		btnDelete = new JButton("Delete (Moderator Only)");
+		btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (User.isModerator(user)) {
-					entry.removeComment(user, list.getSelectedIndex());
-					list.remove(list.getSelectedIndex());
+					if (list.getSelectedIndex() == -1) {
+						JOptionPane.showMessageDialog(contentPane, "Select a comment to delete!",
+								"No Comment Selected!", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					int opt = JOptionPane.showConfirmDialog(getContentPane(),
+							"Are you sure you want to remove the selected comment?", "Confirm Removal",
+							JOptionPane.YES_NO_OPTION);
+					if (opt == 0) {
+						entry.removeComment(user, list.getSelectedIndex());
+						list.remove(list.getSelectedIndex());
+						JOptionPane.showMessageDialog(contentPane, "Comment Successfully Deleted!", "Delete Success!",
+								JOptionPane.INFORMATION_MESSAGE);
+					}
 				} else
 					JOptionPane.showMessageDialog(contentPane, "You do not have permission to do this!",
 							"No Permission!", JOptionPane.ERROR_MESSAGE);
@@ -90,7 +107,8 @@ public class Review extends JFrame {
 		JButton btnViewDetails = new JButton("View Entry Info");
 		btnViewDetails.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				(new ViewEntryInfo(entry)).setVisible(true);;
+				(new ViewEntryInfo(entry)).setVisible(true);
+				;
 			}
 		});
 		btnViewDetails.setFont(new Font("Bahnschrift", Font.BOLD, 10));

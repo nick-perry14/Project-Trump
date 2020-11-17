@@ -87,7 +87,7 @@ public class ModerateReqsWindow extends JFrame {
 
 		JButton viewButton = new JButton("View Info");
 		viewButton.setFont(new Font("Bahnschrift", Font.BOLD, 12));
-		viewButton.setBounds(87, 444, 89, 23);
+		viewButton.setBounds(145, 444, 114, 23);
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				WebEntry sel = list.getSelectedValue();
@@ -130,6 +130,23 @@ public class ModerateReqsWindow extends JFrame {
 		});
 		getContentPane().add(rejectButton);
 		getContentPane().add(approveButton);
+		
+		JButton openButton = new JButton("Open URL");
+		openButton.setFont(new Font("Bahnschrift", Font.BOLD, 12));
+		openButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WebEntry sel = list.getSelectedValue();
+				if(sel == null) 
+				{
+					JOptionPane.showMessageDialog(getContentPane(), "Select A Request!", "No Request Selected!",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				sel.run();
+			}
+		});
+		openButton.setBounds(10, 443, 125, 23);
+		getContentPane().add(openButton);
 		getContentPane().setVisible(true);
 
 	}

@@ -143,6 +143,14 @@ public class AddEntryWindow extends JFrame {
 					urlLabel.setForeground(Color.RED);
 				} else
 					urlLabel.setForeground(Color.BLACK);
+				for (Entry x : Entry.getEntries()) {
+					if (x.getName().equalsIgnoreCase(nameField.getName())) {
+						JOptionPane.showMessageDialog(contentPane, "Entry already exists!", "Add Fail",
+								JOptionPane.ERROR_MESSAGE);
+						req = false;
+						break;
+					}
+				}
 				if (req) {
 					Entry.addEntry(user, nameField.getText(), devField.getText(), (byte) slider.getValue(),
 							(Category) comboBox.getSelectedItem(), urlField.getText());

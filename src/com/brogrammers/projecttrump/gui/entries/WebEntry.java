@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import com.brogrammers.projecttrump.user.Ranks;
 import com.brogrammers.projecttrump.user.User;
 
 /**
@@ -55,6 +54,15 @@ public class WebEntry extends Entry {
 		this.url = url;
 		requests.put(this, user);
 
+	}
+
+	/**
+	 * Gets the URL of the web entry
+	 * 
+	 * @return URL
+	 */
+	public String getURL() {
+		return url;
 	}
 
 	public void run() {

@@ -24,14 +24,15 @@ public class ReqsInfo extends JFrame {
 
 	/**
 	 * Create Window
+	 * 
 	 * @param entry Request Entry
-	 * @param u User that submitted request.
+	 * @param u     User that submitted request.
 	 */
 	public ReqsInfo(WebEntry entry, User u) {
 		setResizable(false);
 		setTitle("Request Info");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 280, 171);
+		setBounds(100, 100, 280, 190);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -79,8 +80,13 @@ public class ReqsInfo extends JFrame {
 
 		JLabel lblUser = new JLabel("Requesting User: " + u.getUsername());
 		lblUser.setFont(new Font("Bahnschrift", Font.BOLD, 12));
-		lblUser.setBounds(10, 101, 263, 14);
+		lblUser.setBounds(10, 125, 263, 14);
 		contentPane.add(lblUser);
+
+		JLabel urlLabel = new JLabel("URL : " + entry.getURL());
+		urlLabel.setFont(new Font("Bahnschrift", Font.BOLD, 12));
+		urlLabel.setBounds(10, 101, 263, 14);
+		contentPane.add(urlLabel);
 
 	}
 }
